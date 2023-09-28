@@ -15,4 +15,8 @@ class TodoService {
   List<Note> getNotes() {
     return notesBox.values.toList();
   }
+
+  Future<void> updateNote(int index, String name, text) async {
+    await notesBox.putAt(index, Note(name: name, text: text));
+  }
 }

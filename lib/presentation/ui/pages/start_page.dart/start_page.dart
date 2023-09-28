@@ -41,6 +41,10 @@ class StartPage extends StatelessWidget {
 class _GroupsList extends StatelessWidget {
   const _GroupsList();
 
+  void showNote(BuildContext context) {
+    Navigator.of(context).pushNamed('/groups/note');
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,7 +80,7 @@ class _GroupsList extends StatelessWidget {
                 child: ListTile(
                   title: Text(note.name),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () {},
+                  onTap: () => showNote(context),
                 ),
               );
             },

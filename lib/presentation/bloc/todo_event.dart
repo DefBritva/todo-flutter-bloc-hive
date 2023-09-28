@@ -33,3 +33,13 @@ final class NoteClicked extends TodoEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class UpdateNoteEvent extends TodoEvent {
+  final int index;
+  final String name;
+  final String text;
+
+  UpdateNoteEvent(this.index, this.name, this.text);
+  @override
+  List<Object?> get props => [];
+}

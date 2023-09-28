@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:my_todo_list/domain/entity/note.dart';
 import 'package:my_todo_list/presentation/bloc/todo_bloc.dart';
 import 'package:my_todo_list/presentation/ui/pages/form_page/form_page.dart';
+import 'package:my_todo_list/presentation/ui/pages/note_page.dart/note.dart';
 import 'package:my_todo_list/services/todo.dart';
 
 import 'presentation/ui/pages/start_page.dart/start_page.dart';
@@ -41,8 +42,9 @@ class App extends StatelessWidget {
         theme: ThemeData(useMaterial3: true),
         debugShowCheckedModeBanner: false,
         routes: {
-          '/groups': (context) => StartPage(),
-          '/groups/form': (context) => FormWidget()
+          '/groups': (context) => const StartPage(),
+          '/groups/form': (context) => const FormWidget(),
+          '/groups/note': (context) => const NoteWidget(),
         },
         initialRoute: '/groups',
       ),

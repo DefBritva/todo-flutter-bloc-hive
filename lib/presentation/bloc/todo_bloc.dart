@@ -26,5 +26,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       await _todoService.deleteNote(event.indexToDelete);
       emit(LoadedState(_todoService.getNotes()));
     });
+
+    on<UpdateNoteEvent>((event, emit) async {
+      await _todoService.updateNote(event.index, event.name, event.text);
+      emit(LoadedState(_todoService.getNotes()));
+    });
   }
 }
