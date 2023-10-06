@@ -11,17 +11,34 @@ class StartPage extends StatelessWidget {
     Navigator.of(context).pushNamed('/groups/form');
   }
 
+  void showArchive(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed('/groups/archive');
+    context.read<TodoBloc>().add(ArchiveOpenEvent());
+  }
+
+  void showNote(BuildContext context) {
+    Navigator.of(context).pushNamed('/groups/note');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => showArchive(context),
+            icon: const Icon(
+              Icons.archive,
+              color: Colors.white,
+            ),
+          )
+        ],
         backgroundColor: Colors.blueAccent,
-        title: const Center(
-          child: Text(
-            'Заметки',
-            style: TextStyle(color: Colors.white),
-          ),
+        title: const Text(
+          'Notes',
+          style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
       ),
       body: const SafeArea(
         child: _GroupsList(),
@@ -50,45 +67,71 @@ class _GroupsList extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var height = size.height;
 
-    return BlocBuilder<TodoBloc, TodoState>(
+    return BlocConsumer<TodoBloc, TodoState>(
+      listener: (context, state) {
+        if (state is DeleteButtonPressed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Delete Button pressed'),
+              duration: Duration(milliseconds: 1000),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
-        return ListView.separated(
-            itemBuilder: (context, index) {
-              Note note = state.notes[index];
-              return Slidable(
-                endActionPane: ActionPane(
-                  motion: const ScrollMotion(),
-                  children: [
-                    SlidableAction(
-                      flex: 1,
-                      onPressed: (context) => () {},
-                      backgroundColor: Colors.grey,
-                      foregroundColor: Colors.white,
-                      icon: Icons.archive,
-                      label: 'Archive',
+        if (state is StartPageState) {
+          return ListView.separated(
+              itemBuilder: (context, index) {
+                Note note = state.notes[index];
+                // bool isDone = note.done;
+                return Slidable(
+                  endActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        flex: 1,
+                        onPressed: (context) =>
+                            BlocProvider.of<TodoBloc>(context)
+                                .add(ArchiveNote(note.name, index)),
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
+                        icon: Icons.archive,
+                        label: 'Archive',
+                      ),
+                      SlidableAction(
+                        onPressed: (context) =>
+                            BlocProvider.of<TodoBloc>(context)
+                                .add(DeleteButtonPressed(indexToDelete: index)),
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
+                    leading: Checkbox(
+                      value: false,
+                      onChanged: (_) {},
                     ),
-                    SlidableAction(
-                      onPressed: (context) => BlocProvider.of<TodoBloc>(context)
-                          .add(DeleteButtonPressed(indexToDelete: index)),
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
-                      label: 'Delete',
-                    ),
-                  ],
-                ),
-                child: ListTile(
-                  title: Text(note.name),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => showNote(context),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => Divider(
-                  height: height * 0.001,
-                  color: Colors.black,
-                ),
-            itemCount: state.notes.length);
+                    title: Text(note.name),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {
+                      BlocProvider.of<TodoBloc>(context)
+                          .add(NoteClicked(index));
+                      showNote(context);
+                    },
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => Divider(
+                    height: height * 0.001,
+                    color: Colors.black,
+                  ),
+              itemCount: state.notes.length);
+        } else {
+          return Container();
+        }
       },
     );
   }

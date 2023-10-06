@@ -16,7 +16,27 @@ class TodoService {
     return notesBox.values.toList();
   }
 
-  Future<void> updateNote(int index, String name, text) async {
+  Future<void> updateNote(
+      int index, String name, String text, bool isDone) async {
     await notesBox.putAt(index, Note(name: name, text: text));
+  }
+
+  Future<void> archiveNote(String name, int index) async {
+    await notesBox.deleteAt(
+        index); // delete current note from start page. Add to archive page
+    await archiveNotesBox.add(Note(name: name));
+  }
+
+  Future<void> unarchiveNote(String name, int index) async {
+    await archiveNotesBox.deleteAt(index);
+    await notesBox.add(Note(name: name));
+  }
+
+  Future<void> deleteArchiveNote(int index) async {
+    await archiveNotesBox.deleteAt(index);
+  }
+
+  List<Note> getArchiveNotes() {
+    return archiveNotesBox.values.toList();
   }
 }

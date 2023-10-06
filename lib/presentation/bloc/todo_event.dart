@@ -24,22 +24,72 @@ final class DeleteButtonPressed extends TodoEvent {
   List<Object?> get props => [indexToDelete];
 }
 
-final class ArchiveButtonPressed extends TodoEvent {
+final class ArchiveNote extends TodoEvent {
+  final String noteName;
+  final int noteIndex;
+
+  ArchiveNote(this.noteName, this.noteIndex);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [noteName, noteIndex];
+}
+
+final class UnnarchiveNote extends TodoEvent {
+  final String noteName;
+  final int noteIndex;
+
+  UnnarchiveNote(this.noteName, this.noteIndex);
+  @override
+  List<Object?> get props => [noteName, noteIndex];
+}
+
+final class DeleteArchiveNote extends TodoEvent {
+  final int indexToDelete;
+
+  DeleteArchiveNote({required this.indexToDelete});
+
+  @override
+  List<Object?> get props => [indexToDelete];
 }
 
 final class NoteClicked extends TodoEvent {
+  final int index;
+
+  NoteClicked(this.index);
   @override
   List<Object?> get props => [];
 }
 
-final class UpdateNoteEvent extends TodoEvent {
+final class ArchiveNoteClicked extends TodoEvent {
   final int index;
+
+  ArchiveNoteClicked(this.index);
+  @override
+  List<Object?> get props => [index];
+}
+
+final class UpdateNoteEvent extends NoteClicked {
   final String name;
   final String text;
+  final bool isDone;
 
-  UpdateNoteEvent(this.index, this.name, this.text);
+  UpdateNoteEvent(super.index, this.name, this.text, this.isDone);
+  @override
+  List<Object?> get props => [index, name, text];
+}
+
+final class ArchiveOpenEvent extends TodoEvent {
   @override
   List<Object?> get props => [];
+}
+
+final class StartPageOpenEvent extends TodoEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+final class DoneButtonPressed extends StartPageOpenEvent {
+  final int index;
+  final bool isDone;
+
+  DoneButtonPressed(this.index, {required this.isDone});
 }
