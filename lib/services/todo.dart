@@ -18,13 +18,14 @@ class TodoService {
 
   Future<void> updateNote(
       int index, String name, String text, bool isDone) async {
-    await notesBox.putAt(index, Note(name: name, text: text));
+    await notesBox.putAt(index, Note(name: name, text: text, done: isDone));
   }
 
-  Future<void> archiveNote(String name, int index) async {
+  Future<void> archiveNote(
+      int index, String name, String text, bool isDone) async {
     await notesBox.deleteAt(
         index); // delete current note from start page. Add to archive page
-    await archiveNotesBox.add(Note(name: name));
+    await archiveNotesBox.add(Note(name: name, text: text, done: isDone));
   }
 
   Future<void> unarchiveNote(String name, int index) async {

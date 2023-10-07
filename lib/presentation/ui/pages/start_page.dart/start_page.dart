@@ -41,7 +41,7 @@ class StartPage extends StatelessWidget {
         ],
         backgroundColor: Colors.blueAccent,
         title: const Text(
-          'Notes',
+          "Tasks",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -89,7 +89,6 @@ class _GroupsList extends StatelessWidget {
           return ListView.separated(
               itemBuilder: (context, index) {
                 Note note = state.notes[index];
-                bool isDone = note.done;
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -98,7 +97,7 @@ class _GroupsList extends StatelessWidget {
                         flex: 1,
                         onPressed: (context) =>
                             BlocProvider.of<TodoBloc>(context)
-                                .add(ArchiveNote(note.name, index)),
+                                .add(ArchiveNote(index)),
                         backgroundColor: Colors.grey,
                         foregroundColor: Colors.white,
                         icon: Icons.archive,
@@ -116,7 +115,12 @@ class _GroupsList extends StatelessWidget {
                     ],
                   ),
                   child: ListTile(
-                    leading: MyCheckBox(index),
+                    leading: Checkbox(
+                      value: note.done,
+                      onChanged: (value) {
+                        context.read<TodoBloc>().add(DoneButtonPressed(index));
+                      },
+                    ),
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
@@ -135,29 +139,6 @@ class _GroupsList extends StatelessWidget {
         } else {
           return Container();
         }
-      },
-    );
-  }
-}
-
-class MyCheckBox extends StatefulWidget {
-  const MyCheckBox(this.index, {super.key});
-  final int index;
-
-  @override
-  State<MyCheckBox> createState() => _MyCheckBoxState();
-}
-
-class _MyCheckBoxState extends State<MyCheckBox> {
-  bool isDone = false;
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      value: isDone,
-      onChanged: (value) {
-        setState(() {
-          isDone = value!;
-        });
       },
     );
   }

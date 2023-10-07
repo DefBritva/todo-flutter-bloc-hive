@@ -36,6 +36,8 @@ class _NoteWidgetState extends State<NoteWidget> {
       builder: (context, state) {
         if (state is NoteOpenedState) {
           name = state.notes[state.currentNote].name;
+        } else if (state is ArchiveNoteOpenedState) {
+          name = state.archiveNotes[state.currentNote].name;
         }
         return Scaffold(
           appBar: AppBar(
@@ -78,10 +80,9 @@ class _NoteWidgetState extends State<NoteWidget> {
                           final index = state.currentNote;
                           final name = state.notes[index].name;
                           final text = _noteController.text;
-                          const isDone = false;
-                          // final isDone = state.notes[index].done;
+
                           BlocProvider.of<TodoBloc>(context)
-                              .add(UpdateNoteEvent(index, name, text, isDone));
+                              .add(UpdateNoteEvent(index, name, text));
                         }
                       },
                       icon: const Icon(Icons.done),
@@ -102,20 +103,21 @@ class _NoteWidgetState extends State<NoteWidget> {
                       if (state is NoteOpenedState) {
                         _noteController.text =
                             state.notes[state.currentNote].text;
-                        return TextField(
-                          focusNode: textfieldFocusNode,
-                          controller: _noteController,
-                          onTap: () => textfieldFocusNode.requestFocus(),
-                          style: const TextStyle(fontSize: 20),
-                          maxLines: 99999,
-                          decoration: const InputDecoration.collapsed(
-                            hintText: "",
-                          ),
-                          autofocus: false,
-                        );
-                      } else {
-                        return Container();
+                      } else if (state is ArchiveNoteOpenedState) {
+                        _noteController.text =
+                            state.archiveNotes[state.currentNote].text;
                       }
+                      return TextField(
+                        focusNode: textfieldFocusNode,
+                        controller: _noteController,
+                        onTap: () => textfieldFocusNode.requestFocus(),
+                        style: const TextStyle(fontSize: 20),
+                        maxLines: 99999,
+                        decoration: const InputDecoration.collapsed(
+                          hintText: "",
+                        ),
+                        autofocus: false,
+                      );
                     },
                   ),
                 ),

@@ -31,8 +31,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     });
 
     on<UpdateNoteEvent>((event, emit) async {
+      final isDone = _todoService.getNotes()[event.index].done;
       await _todoService.updateNote(
-          event.index, event.name, event.text, event.isDone);
+          event.index, event.name, event.text, isDone);
       final newState = NoteOpenedState(_todoService.getNotes(), event.index);
       emit(newState);
     });
@@ -49,7 +50,11 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     });
 
     on<ArchiveNote>((event, emit) async {
-      await _todoService.archiveNote(event.noteName, event.noteIndex);
+      final note = _todoService.getNotes()[event.noteIndex];
+      final name = note.name;
+      final text = note.text;
+      final done = note.done;
+      await _todoService.archiveNote(event.noteIndex, name, text, done);
       final newState = StartPageState(_todoService.getNotes());
       emit(newState);
     });
@@ -77,11 +82,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     });
 
     on<DoneButtonPressed>((event, emit) async {
-      final isDone = event.isDone;
-      final note = _todoService.getNotes()[event.index];
-      await _todoService.updateNote(event.index, note.name, note.text, isDone);
-      final newState = StartPageState(_todoService.getNotes());
-      emit(newState);
+      var note = _todoService.getNotes()[event.index];
+      var name = note.name;
+      var text = note.text;
+      var isDone = note.done;
+
+      await _todoService.updateNote(event.index, name, text, !isDone);
+      await _todoService.archiveNote(event.index, name, text, !isDone);
+      emit(StartPageState(_todoService.getNotes()));
     });
   }
 }

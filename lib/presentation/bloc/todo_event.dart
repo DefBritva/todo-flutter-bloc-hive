@@ -25,12 +25,11 @@ final class DeleteButtonPressed extends TodoEvent {
 }
 
 final class ArchiveNote extends TodoEvent {
-  final String noteName;
   final int noteIndex;
 
-  ArchiveNote(this.noteName, this.noteIndex);
+  ArchiveNote(this.noteIndex);
   @override
-  List<Object?> get props => [noteName, noteIndex];
+  List<Object?> get props => [noteIndex];
 }
 
 final class UnnarchiveNote extends TodoEvent {
@@ -67,12 +66,12 @@ final class ArchiveNoteClicked extends TodoEvent {
   List<Object?> get props => [index];
 }
 
-final class UpdateNoteEvent extends NoteClicked {
+final class UpdateNoteEvent extends TodoEvent {
+  final int index;
   final String name;
   final String text;
-  final bool isDone;
 
-  UpdateNoteEvent(super.index, this.name, this.text, this.isDone);
+  UpdateNoteEvent(this.index, this.name, this.text);
   @override
   List<Object?> get props => [index, name, text];
 }
@@ -89,10 +88,11 @@ final class StartPageOpenEvent extends TodoEvent {
 
 final class DoneButtonPressed extends TodoEvent {
   final int index;
-  final bool isDone;
 
-  DoneButtonPressed(this.index, {required this.isDone});
+  DoneButtonPressed(
+    this.index,
+  );
 
   @override
-  List<Object?> get props => [index, isDone];
+  List<Object?> get props => [index];
 }

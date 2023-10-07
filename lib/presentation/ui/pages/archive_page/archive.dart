@@ -39,7 +39,7 @@ class Archive extends StatelessWidget {
         ],
         backgroundColor: Colors.blueAccent,
         title: const Text(
-          'Archive',
+          'Completed',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -78,7 +78,7 @@ class Archive extends StatelessWidget {
                       ),
                       child: ListTile(
                         leading: Checkbox(
-                          value: false,
+                          value: note.done,
                           onChanged: (_) {},
                         ),
                         title: Text(note.name),

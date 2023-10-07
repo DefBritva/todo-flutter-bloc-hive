@@ -20,6 +20,7 @@ void main() async {
   Hive.registerAdapter(NoteAdapter());
   notesBox = await Hive.openBox<Note>('my_notes');
   archiveNotesBox = await Hive.openBox<Note>('my_archiveNotes');
+
   Bloc.observer = MyBlocObserver();
   runApp(const MainApp());
 }
