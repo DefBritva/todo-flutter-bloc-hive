@@ -10,8 +10,8 @@ class Note extends HiveObject {
   @HiveField(1)
   String text;
 
-  // @HiveField(2)
-  // bool done = false;
+  @HiveField(2)
+  bool done;
 
-  Note({required this.name, this.text = ''});
+  Note({required this.name, this.text = '', this.done = false});
 }

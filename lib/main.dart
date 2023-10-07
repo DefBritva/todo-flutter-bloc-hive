@@ -8,14 +8,18 @@ import 'package:my_todo_list/presentation/ui/pages/archive_page/archive.dart';
 import 'package:my_todo_list/presentation/ui/pages/form_page/form_page.dart';
 import 'package:my_todo_list/presentation/ui/pages/note_page.dart/note.dart';
 import 'package:my_todo_list/services/todo.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'presentation/ui/pages/start_page.dart/start_page.dart';
 
 void main() async {
-  await Hive.initFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
+  final dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  await Hive.initFlutter('hive_db');
   Hive.registerAdapter(NoteAdapter());
-  notesBox = await Hive.openBox<Note>('notes');
-  archiveNotesBox = await Hive.openBox<Note>('archiveNotes');
+  notesBox = await Hive.openBox<Note>('my_notes');
+  archiveNotesBox = await Hive.openBox<Note>('my_archiveNotes');
   Bloc.observer = MyBlocObserver();
   runApp(const MainApp());
 }

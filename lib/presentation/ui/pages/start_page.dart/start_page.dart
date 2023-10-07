@@ -24,6 +24,12 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.star,
+              color: Colors.white,
+            )),
         actions: [
           IconButton(
             onPressed: () => showArchive(context),
@@ -83,7 +89,7 @@ class _GroupsList extends StatelessWidget {
           return ListView.separated(
               itemBuilder: (context, index) {
                 Note note = state.notes[index];
-                // bool isDone = note.done;
+                bool isDone = note.done;
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -110,10 +116,7 @@ class _GroupsList extends StatelessWidget {
                     ],
                   ),
                   child: ListTile(
-                    leading: Checkbox(
-                      value: false,
-                      onChanged: (_) {},
-                    ),
+                    leading: MyCheckBox(index),
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
@@ -132,6 +135,29 @@ class _GroupsList extends StatelessWidget {
         } else {
           return Container();
         }
+      },
+    );
+  }
+}
+
+class MyCheckBox extends StatefulWidget {
+  const MyCheckBox(this.index, {super.key});
+  final int index;
+
+  @override
+  State<MyCheckBox> createState() => _MyCheckBoxState();
+}
+
+class _MyCheckBoxState extends State<MyCheckBox> {
+  bool isDone = false;
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+      value: isDone,
+      onChanged: (value) {
+        setState(() {
+          isDone = value!;
+        });
       },
     );
   }

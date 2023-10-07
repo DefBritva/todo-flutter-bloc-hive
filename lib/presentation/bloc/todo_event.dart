@@ -87,9 +87,12 @@ final class StartPageOpenEvent extends TodoEvent {
   List<Object?> get props => [];
 }
 
-final class DoneButtonPressed extends StartPageOpenEvent {
+final class DoneButtonPressed extends TodoEvent {
   final int index;
   final bool isDone;
 
   DoneButtonPressed(this.index, {required this.isDone});
+
+  @override
+  List<Object?> get props => [index, isDone];
 }

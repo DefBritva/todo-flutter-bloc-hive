@@ -52,10 +52,11 @@ class _NoteWidgetState extends State<NoteWidget> {
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: AutoSizeText(
+                    minFontSize: 10,
+                    maxFontSize: 10,
                     maxLines: 1,
                     name,
                     style: const TextStyle(
-                      fontSize: 25,
                       color: Colors.white,
                     ),
                   ),
