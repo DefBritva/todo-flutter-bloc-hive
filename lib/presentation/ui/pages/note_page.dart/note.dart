@@ -11,9 +11,7 @@ class NoteWidget extends StatefulWidget {
 }
 
 class _NoteWidgetState extends State<NoteWidget> {
-  final _noteController = TextEditingController();
   late FocusNode textfieldFocusNode;
-  late String name;
 
   @override
   void initState() {
@@ -29,14 +27,20 @@ class _NoteWidgetState extends State<NoteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final userWidth = size.width;
-    final userHeight = size.height;
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
+        final noteController = TextEditingController();
+        late String name;
+        late bool isEnabled;
+        final size = MediaQuery.of(context).size;
+        final userWidth = size.width;
+        final userHeight = size.height;
         if (state is NoteOpenedState) {
           name = state.notes[state.currentNote].name;
+          isEnabled = true;
         } else if (state is ArchiveNoteOpenedState) {
+          isEnabled = false;
+          textfieldFocusNode.unfocus();
           name = state.archiveNotes[state.currentNote].name;
         }
         return Scaffold(
@@ -79,7 +83,7 @@ class _NoteWidgetState extends State<NoteWidget> {
                           FocusScope.of(context).unfocus();
                           final index = state.currentNote;
                           final name = state.notes[index].name;
-                          final text = _noteController.text;
+                          final text = noteController.text;
 
                           BlocProvider.of<TodoBloc>(context)
                               .add(UpdateNoteEvent(index, name, text));
@@ -101,15 +105,16 @@ class _NoteWidgetState extends State<NoteWidget> {
                   child: BlocBuilder<TodoBloc, TodoState>(
                     builder: (context, state) {
                       if (state is NoteOpenedState) {
-                        _noteController.text =
+                        noteController.text =
                             state.notes[state.currentNote].text;
                       } else if (state is ArchiveNoteOpenedState) {
-                        _noteController.text =
+                        noteController.text =
                             state.archiveNotes[state.currentNote].text;
                       }
                       return TextField(
+                        enabled: isEnabled,
                         focusNode: textfieldFocusNode,
-                        controller: _noteController,
+                        controller: noteController,
                         onTap: () => textfieldFocusNode.requestFocus(),
                         style: const TextStyle(fontSize: 20),
                         maxLines: 99999,

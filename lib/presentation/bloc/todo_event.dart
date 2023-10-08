@@ -55,7 +55,7 @@ final class NoteClicked extends TodoEvent {
 
   NoteClicked(this.index);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [index];
 }
 
 final class ArchiveNoteClicked extends TodoEvent {
