@@ -29,8 +29,9 @@ class TodoService {
   }
 
   Future<void> unarchiveNote(String name, int index) async {
+    final text = archiveNotesBox.getAt(index)?.text ?? '';
     await archiveNotesBox.deleteAt(index);
-    await notesBox.add(Note(name: name));
+    await notesBox.add(Note(name: name, text: text, done: false));
   }
 
   Future<void> deleteArchiveNote(int index) async {

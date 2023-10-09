@@ -7,16 +7,16 @@ import 'package:my_todo_list/presentation/bloc/todo_bloc.dart';
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
 
-  void showForm(BuildContext context) {
+  static void showForm(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/form');
   }
 
-  void showArchive(BuildContext context) {
+  static void showArchive(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('/groups/archive');
     context.read<TodoBloc>().add(ArchiveOpenEvent());
   }
 
-  void showNote(BuildContext context) {
+  static void showNote(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/note');
   }
 
@@ -64,26 +64,16 @@ class StartPage extends StatelessWidget {
 class _GroupsList extends StatelessWidget {
   const _GroupsList();
 
-  void showNote(BuildContext context) {
+  static void showNote(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/note');
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var height = size.height;
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
 
-    return BlocConsumer<TodoBloc, TodoState>(
-      listener: (context, state) {
-        if (state is DeleteButtonPressed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Delete Button pressed'),
-              duration: Duration(milliseconds: 1000),
-            ),
-          );
-        }
-      },
+    return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
         if (state is StartPageState) {
           return ListView.separated(

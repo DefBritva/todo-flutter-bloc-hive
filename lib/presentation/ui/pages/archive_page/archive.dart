@@ -8,23 +8,23 @@ import '../../../bloc/todo_bloc.dart';
 class Archive extends StatelessWidget {
   const Archive({super.key});
 
-  void showNote(BuildContext context) {
+  static void showNote(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/note');
   }
 
-  void showForm(BuildContext context) {
+  static void showForm(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/form');
   }
 
-  void back(BuildContext context) {
+  static void back(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('/groups');
     context.read<TodoBloc>().add(StartPageOpenEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var height = size.height;
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
 
     return Scaffold(
       appBar: AppBar(

@@ -36,7 +36,7 @@ class NoteOpenedState extends StartPageState {
   const NoteOpenedState(super.notes, this.currentNote);
 
   @override
-  List<Object?> get props => [currentNote];
+  List<Object?> get props => [notes, currentNote];
 }
 
 class ArchiveNoteOpenedState extends ArchiveState {

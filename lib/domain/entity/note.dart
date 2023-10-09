@@ -1,17 +1,21 @@
 import 'package:hive/hive.dart';
+import 'package:equatable/equatable.dart';
 
 part 'note.g.dart';
 
 @HiveType(typeId: 1)
-class Note extends HiveObject {
+class Note extends Equatable {
   @HiveField(0)
-  String name;
+  final String name;
 
   @HiveField(1)
-  String text;
+  final String text;
 
   @HiveField(2)
-  bool done;
+  final bool done;
 
-  Note({required this.name, this.text = '', this.done = false});
+  const Note({required this.name, this.text = '', this.done = false});
+
+  @override
+  List<Object?> get props => [name, text, done];
 }

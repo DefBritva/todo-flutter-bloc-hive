@@ -12,6 +12,9 @@ class NoteWidget extends StatefulWidget {
 
 class _NoteWidgetState extends State<NoteWidget> {
   late FocusNode textfieldFocusNode;
+  final noteController = TextEditingController();
+  late String name;
+  late bool isEnabled;
 
   @override
   void initState() {
@@ -29,9 +32,6 @@ class _NoteWidgetState extends State<NoteWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        final noteController = TextEditingController();
-        late String name;
-        late bool isEnabled;
         final size = MediaQuery.of(context).size;
         final userWidth = size.width;
         final userHeight = size.height;
@@ -80,13 +80,14 @@ class _NoteWidgetState extends State<NoteWidget> {
                   ? IconButton(
                       onPressed: () {
                         if (state is NoteOpenedState) {
-                          FocusScope.of(context).unfocus();
-                          final index = state.currentNote;
-                          final name = state.notes[index].name;
-                          final text = noteController.text;
-
-                          BlocProvider.of<TodoBloc>(context)
-                              .add(UpdateNoteEvent(index, name, text));
+                          setState(() {
+                            final index = state.currentNote;
+                            final name = state.notes[index].name;
+                            final text = noteController.text;
+                            BlocProvider.of<TodoBloc>(context)
+                                .add(UpdateNoteEvent(index, name, text));
+                            FocusScope.of(context).unfocus();
+                          });
                         }
                       },
                       icon: const Icon(Icons.done),
@@ -101,30 +102,27 @@ class _NoteWidgetState extends State<NoteWidget> {
                   horizontal: userWidth * 0.05, vertical: userHeight * 0.01),
               child: SizedBox(
                 width: userWidth * 0.9,
-                child: Expanded(
-                  child: BlocBuilder<TodoBloc, TodoState>(
-                    builder: (context, state) {
-                      if (state is NoteOpenedState) {
-                        noteController.text =
-                            state.notes[state.currentNote].text;
-                      } else if (state is ArchiveNoteOpenedState) {
-                        noteController.text =
-                            state.archiveNotes[state.currentNote].text;
-                      }
-                      return TextField(
-                        enabled: isEnabled,
-                        focusNode: textfieldFocusNode,
-                        controller: noteController,
-                        onTap: () => textfieldFocusNode.requestFocus(),
-                        style: const TextStyle(fontSize: 20),
-                        maxLines: 99999,
-                        decoration: const InputDecoration.collapsed(
-                          hintText: "",
-                        ),
-                        autofocus: false,
-                      );
-                    },
-                  ),
+                child: BlocBuilder<TodoBloc, TodoState>(
+                  builder: (context, state) {
+                    if (state is NoteOpenedState) {
+                      noteController.text = state.notes[state.currentNote].text;
+                    } else if (state is ArchiveNoteOpenedState) {
+                      noteController.text =
+                          state.archiveNotes[state.currentNote].text;
+                    }
+                    return TextField(
+                      enabled: isEnabled,
+                      focusNode: textfieldFocusNode,
+                      controller: noteController,
+                      onTap: () => textfieldFocusNode.requestFocus(),
+                      style: const TextStyle(fontSize: 20),
+                      maxLines: 99999,
+                      decoration: const InputDecoration.collapsed(
+                        hintText: "",
+                      ),
+                      autofocus: false,
+                    );
+                  },
                 ),
               ),
             ),
