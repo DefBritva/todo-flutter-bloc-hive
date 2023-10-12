@@ -44,7 +44,7 @@ class _GroupsList extends StatelessWidget {
                           flex: 1,
                           onPressed: (context) =>
                               BlocProvider.of<TodoBloc>(context)
-                                  .add(ArchiveNote(index)),
+                                  .add(CompletedNote(index)),
                           backgroundColor: Colors.grey,
                           foregroundColor: Colors.white,
                           icon: Icons.archive,

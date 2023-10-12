@@ -52,31 +52,31 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(newState);
     });
 
-    on<ArchiveNoteClicked>((event, emit) {
-      final newState =
-          ArchiveNoteOpenedState(_todoService.getArchiveNotes(), event.index);
+    on<CompletedNoteClicked>((event, emit) {
+      final newState = CompletedNoteOpenedState(
+          _todoService.getCompletedNotes(), event.index);
       emit(newState);
     });
 
-    on<ArchiveNote>((event, emit) async {
+    on<CompletedNote>((event, emit) async {
       final note = _todoService.getNotes()[event.noteIndex];
       final name = note.name;
       final text = note.text;
       final done = note.done;
-      await _todoService.archiveNote(event.noteIndex, name, text, done);
+      await _todoService.completeNote(event.noteIndex, name, text, done);
       final newState = StartPageState(_todoService.getNotes());
       emit(newState);
     });
 
     on<UnnarchiveNote>((event, emit) async {
-      await _todoService.unarchiveNote(event.noteName, event.noteIndex);
-      final newState = ArchiveState(_todoService.getArchiveNotes());
+      await _todoService.uncompleteNote(event.noteName, event.noteIndex);
+      final newState = CompletedState(_todoService.getCompletedNotes());
       emit(newState);
     });
 
-    on<DeleteArchiveNote>((event, emit) async {
-      await _todoService.deleteArchiveNote(event.indexToDelete);
-      final newState = ArchiveState(_todoService.getArchiveNotes());
+    on<DeleteCompletedNote>((event, emit) async {
+      await _todoService.deleteCompletedNote(event.indexToDelete);
+      final newState = CompletedState(_todoService.getCompletedNotes());
       emit(newState);
     });
 
@@ -85,8 +85,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(newState);
     });
 
-    on<ArchiveOpen>((_, emit) {
-      final newState = ArchiveState(_todoService.getArchiveNotes());
+    on<CompletedOpen>((_, emit) {
+      final newState = CompletedState(_todoService.getCompletedNotes());
       emit(newState);
     });
 
@@ -97,7 +97,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       var isDone = note.done;
 
       await _todoService.updateNote(event.index, name, text, !isDone);
-      await _todoService.archiveNote(event.index, name, text, !isDone);
+      await _todoService.completeNote(event.index, name, text, !isDone);
       emit(StartPageState(_todoService.getNotes()));
     });
   }

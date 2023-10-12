@@ -36,7 +36,7 @@ class _TaskPageState extends State<TaskPage> {
         if (state is NoteOpenedState) {
           name = state.notes[state.currentNote].name;
           isEnabled = true;
-        } else if (state is ArchiveNoteOpenedState) {
+        } else if (state is CompletedNoteOpenedState) {
           isEnabled = false;
           textfieldFocusNode.unfocus();
           name = state.archiveNotes[state.currentNote].name;
@@ -57,7 +57,7 @@ class _TaskPageState extends State<TaskPage> {
                   builder: (context, state) {
                     if (state is NoteOpenedState) {
                       noteController.text = state.notes[state.currentNote].text;
-                    } else if (state is ArchiveNoteOpenedState) {
+                    } else if (state is CompletedNoteOpenedState) {
                       noteController.text =
                           state.archiveNotes[state.currentNote].text;
                     }

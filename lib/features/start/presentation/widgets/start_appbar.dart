@@ -9,7 +9,7 @@ class StartAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   static void showArchive(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('/groups/archive');
-    context.read<TodoBloc>().add(ArchiveOpen());
+    context.read<TodoBloc>().add(CompletedOpen());
   }
 
   @override

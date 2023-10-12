@@ -15,7 +15,7 @@ class CompletedTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        if (state is ArchiveState) {
+        if (state is CompletedState) {
           return ListView.separated(
               itemBuilder: (context, index) {
                 Note note = state.archiveNotes[index];
@@ -36,7 +36,7 @@ class CompletedTasks extends StatelessWidget {
                       SlidableAction(
                         onPressed: (context) =>
                             BlocProvider.of<TodoBloc>(context)
-                                .add(DeleteArchiveNote(indexToDelete: index)),
+                                .add(DeleteCompletedNote(indexToDelete: index)),
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
@@ -53,7 +53,7 @@ class CompletedTasks extends StatelessWidget {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       BlocProvider.of<TodoBloc>(context)
-                          .add(ArchiveNoteClicked(index));
+                          .add(CompletedNoteClicked(index));
                       showNote(context);
                     },
                   ),

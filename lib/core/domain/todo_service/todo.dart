@@ -7,7 +7,7 @@ class TodoService {
   Future<void> init() async {
     Hive.registerAdapter(NoteAdapter());
     notesBox = await Hive.openBox<Note>('my_notes');
-    archiveNotesBox = await Hive.openBox<Note>('my_archiveNotes');
+    completedNotesBox = await Hive.openBox<Note>('my_archiveNotes');
   }
 
   Future<void> addNote(String name) async {
@@ -27,24 +27,24 @@ class TodoService {
     await notesBox.putAt(index, Note(name: name, text: text, done: isDone));
   }
 
-  Future<void> archiveNote(
+  Future<void> completeNote(
       int index, String name, String text, bool isDone) async {
     await notesBox.deleteAt(
         index); // delete current note from start page. Add to archive page
-    await archiveNotesBox.add(Note(name: name, text: text, done: isDone));
+    await completedNotesBox.add(Note(name: name, text: text, done: isDone));
   }
 
-  Future<void> unarchiveNote(String name, int index) async {
-    final text = archiveNotesBox.getAt(index)?.text ?? '';
-    await archiveNotesBox.deleteAt(index);
+  Future<void> uncompleteNote(String name, int index) async {
+    final text = completedNotesBox.getAt(index)?.text ?? '';
+    await completedNotesBox.deleteAt(index);
     await notesBox.add(Note(name: name, text: text, done: false));
   }
 
-  Future<void> deleteArchiveNote(int index) async {
-    await archiveNotesBox.deleteAt(index);
+  Future<void> deleteCompletedNote(int index) async {
+    await completedNotesBox.deleteAt(index);
   }
 
-  List<Note> getArchiveNotes() {
-    return archiveNotesBox.values.toList();
+  List<Note> getCompletedNotes() {
+    return completedNotesBox.values.toList();
   }
 }
