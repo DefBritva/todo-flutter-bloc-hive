@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:my_todo_list/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/features/note_page.dart/presentation/widgets/note_field.dart';
 
 class NoteWidget extends StatefulWidget {
   const NoteWidget({super.key});
@@ -80,14 +81,12 @@ class _NoteWidgetState extends State<NoteWidget> {
                   ? IconButton(
                       onPressed: () {
                         if (state is NoteOpenedState) {
-                          setState(() {
-                            final index = state.currentNote;
-                            final name = state.notes[index].name;
-                            final text = noteController.text;
-                            BlocProvider.of<TodoBloc>(context)
-                                .add(UpdateNoteEvent(index, name, text));
-                            FocusScope.of(context).unfocus();
-                          });
+                          final index = state.currentNote;
+                          final name = state.notes[index].name;
+                          final text = noteController.text;
+                          BlocProvider.of<TodoBloc>(context)
+                              .add(UpdateNote(index, name, text));
+                          FocusScope.of(context).unfocus();
                         }
                       },
                       icon: const Icon(Icons.done),
@@ -110,18 +109,10 @@ class _NoteWidgetState extends State<NoteWidget> {
                       noteController.text =
                           state.archiveNotes[state.currentNote].text;
                     }
-                    return TextField(
-                      enabled: isEnabled,
-                      focusNode: textfieldFocusNode,
-                      controller: noteController,
-                      onTap: () => textfieldFocusNode.requestFocus(),
-                      style: const TextStyle(fontSize: 20),
-                      maxLines: 99999,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: "",
-                      ),
-                      autofocus: false,
-                    );
+                    return NoteField(
+                        isEnabled: isEnabled,
+                        textfieldFocusNode: textfieldFocusNode,
+                        noteController: noteController);
                   },
                 ),
               ),

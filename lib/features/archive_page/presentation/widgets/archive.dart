@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:my_todo_list/domain/entity/note.dart';
-
-import '../../../bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/domain/entity/note.dart';
+import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
 
 class Archive extends StatelessWidget {
   const Archive({super.key});
@@ -18,7 +17,7 @@ class Archive extends StatelessWidget {
 
   static void back(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('/groups');
-    context.read<TodoBloc>().add(StartPageOpenEvent());
+    context.read<TodoBloc>().add(StartPageOpen());
   }
 
   @override

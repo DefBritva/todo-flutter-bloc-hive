@@ -1,9 +1,15 @@
 import 'package:hive_flutter/adapters.dart';
-import 'package:my_todo_list/domain/entity/note.dart';
+import 'package:my_todo_list/core/domain/entity/note.dart';
 
-part 'box.dart';
+part 'boxes.dart';
 
 class TodoService {
+  Future<void> init() async {
+    Hive.registerAdapter(NoteAdapter());
+    notesBox = await Hive.openBox<Note>('my_notes');
+    archiveNotesBox = await Hive.openBox<Note>('my_archiveNotes');
+  }
+
   Future<void> addNote(String name) async {
     await notesBox.add(Note(name: name));
   }

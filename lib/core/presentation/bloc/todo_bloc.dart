@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:my_todo_list/domain/entity/note.dart';
-import 'package:my_todo_list/services/todo.dart';
+import 'package:my_todo_list/core/domain/entity/note.dart';
+import 'package:my_todo_list/core/domain/todo_service/todo.dart';
 
 part 'todo_event.dart';
 part 'todo_state.dart';
@@ -12,8 +11,18 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final TodoService _todoService;
   TodoBloc(
     this._todoService,
-  ) : super(InitialState(_todoService.getNotes())) {
-    on<LoadNotesEvent>((_, emit) {
+  ) : super(RegisteringServiceState()) {
+    on<RegisterService>((event, emit) async {
+      try {
+        await _todoService.init();
+        emit(RegisterSuccessfulState());
+        emit(InitialState(_todoService.getNotes()));
+      } catch (e) {
+        emit(RegisterErrorState(error: '$e'));
+      }
+    });
+
+    on<LoadNotes>((_, emit) {
       final newState = StartPageState(_todoService.getNotes());
       emit(newState);
     });
@@ -30,7 +39,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(newState);
     });
 
-    on<UpdateNoteEvent>((event, emit) async {
+    on<UpdateNote>((event, emit) async {
       final isDone = _todoService.getNotes()[event.index].done;
       await _todoService.updateNote(
           event.index, event.name, event.text, isDone);
@@ -71,12 +80,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       emit(newState);
     });
 
-    on<StartPageOpenEvent>((_, emit) {
+    on<StartPageOpen>((_, emit) {
       final newState = StartPageState(_todoService.getNotes());
       emit(newState);
     });
 
-    on<ArchiveOpenEvent>((_, emit) {
+    on<ArchiveOpen>((_, emit) {
       final newState = ArchiveState(_todoService.getArchiveNotes());
       emit(newState);
     });

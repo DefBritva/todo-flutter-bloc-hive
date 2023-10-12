@@ -2,8 +2,13 @@ part of 'todo_bloc.dart';
 
 sealed class TodoEvent extends Equatable {}
 
-final class LoadNotesEvent extends TodoEvent {
-  LoadNotesEvent();
+final class RegisterService extends TodoEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+final class LoadNotes extends TodoEvent {
+  LoadNotes();
   @override
   List<Object?> get props => [];
 }
@@ -66,22 +71,22 @@ final class ArchiveNoteClicked extends TodoEvent {
   List<Object?> get props => [index];
 }
 
-final class UpdateNoteEvent extends TodoEvent {
+final class UpdateNote extends TodoEvent {
   final int index;
   final String name;
   final String text;
 
-  UpdateNoteEvent(this.index, this.name, this.text);
+  UpdateNote(this.index, this.name, this.text);
   @override
   List<Object?> get props => [index, name, text];
 }
 
-final class ArchiveOpenEvent extends TodoEvent {
+final class ArchiveOpen extends TodoEvent {
   @override
   List<Object?> get props => [];
 }
 
-final class StartPageOpenEvent extends TodoEvent {
+final class StartPageOpen extends TodoEvent {
   @override
   List<Object?> get props => [];
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_todo_list/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
 
 class FormWidget extends StatelessWidget {
   const FormWidget({super.key});

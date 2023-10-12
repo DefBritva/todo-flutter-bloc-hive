@@ -5,6 +5,25 @@ abstract class TodoState extends Equatable {
   const TodoState();
 }
 
+class RegisteringServiceState extends TodoState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RegisterSuccessfulState extends TodoState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RegisterErrorState extends TodoState {
+  final String error;
+  const RegisterErrorState({
+    required this.error,
+  });
+  @override
+  List<Object?> get props => [error];
+}
+
 class InitialState extends TodoState {
   final List<Note> notes;
 
