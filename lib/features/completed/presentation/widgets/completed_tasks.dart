@@ -3,82 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/utils/user_settings.dart';
 
-class StartPage extends StatelessWidget {
-  const StartPage({super.key});
-
-  static void showForm(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/form');
-  }
-
-  static void showArchive(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed('/groups/archive');
-    context.read<TodoBloc>().add(ArchiveOpen());
-  }
-
+class CompletedTasks extends StatelessWidget {
+  const CompletedTasks({super.key});
   static void showNote(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/note');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.star,
-              color: Colors.white,
-            )),
-        actions: [
-          IconButton(
-            onPressed: () => showArchive(context),
-            icon: const Icon(
-              Icons.archive,
-              color: Colors.white,
-            ),
-          )
-        ],
-        backgroundColor: Colors.blueAccent,
-        title: const Text(
-          "Tasks",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
-      body: const SafeArea(
-        child: _GroupsList(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pinkAccent,
-        onPressed: () => showForm(context),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-}
-
-class _GroupsList extends StatelessWidget {
-  const _GroupsList();
-
-  static void showNote(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/note');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final height = size.height;
-
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        if (state is StartPageState) {
+        if (state is ArchiveState) {
           return ListView.separated(
               itemBuilder: (context, index) {
-                Note note = state.notes[index];
+                Note note = state.archiveNotes[index];
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -87,16 +27,16 @@ class _GroupsList extends StatelessWidget {
                         flex: 1,
                         onPressed: (context) =>
                             BlocProvider.of<TodoBloc>(context)
-                                .add(ArchiveNote(index)),
+                                .add(UnnarchiveNote(note.name, index)),
                         backgroundColor: Colors.grey,
                         foregroundColor: Colors.white,
                         icon: Icons.archive,
-                        label: 'Archive',
+                        label: 'uncomplete',
                       ),
                       SlidableAction(
                         onPressed: (context) =>
                             BlocProvider.of<TodoBloc>(context)
-                                .add(DeleteButtonPressed(indexToDelete: index)),
+                                .add(DeleteArchiveNote(indexToDelete: index)),
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
@@ -107,25 +47,23 @@ class _GroupsList extends StatelessWidget {
                   child: ListTile(
                     leading: Checkbox(
                       value: note.done,
-                      onChanged: (value) {
-                        context.read<TodoBloc>().add(DoneButtonPressed(index));
-                      },
+                      onChanged: (_) {},
                     ),
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       BlocProvider.of<TodoBloc>(context)
-                          .add(NoteClicked(index));
+                          .add(ArchiveNoteClicked(index));
                       showNote(context);
                     },
                   ),
                 );
               },
               separatorBuilder: (context, index) => Divider(
-                    height: height * 0.001,
+                    height: UserSettings.height * 0.001,
                     color: Colors.black,
                   ),
-              itemCount: state.notes.length);
+              itemCount: state.archiveNotes.length);
         } else {
           return Container();
         }

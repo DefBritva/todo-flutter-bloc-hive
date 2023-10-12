@@ -4,12 +4,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:my_todo_list/core/domain/todo_service/todo.dart';
 import 'package:my_todo_list/core/presentation/bloc/my_bloc_observer.dart';
 import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
-import 'package:my_todo_list/features/archive_page/presentation/widgets/archive.dart';
-import 'package:my_todo_list/features/form_page/presentation/widgets/form_page.dart';
-import 'package:my_todo_list/features/note_page.dart/presentation/note.dart';
+import 'package:my_todo_list/features/completed/presentation/completed_page.dart';
+import 'package:my_todo_list/features/form/presentation/form_page.dart';
+import 'package:my_todo_list/features/task/presentation/task_page.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'features/start_page.dart/presentation/widgets/start_page.dart';
+import 'features/start/presentation/start_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,9 +47,9 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           '/groups': (context) => const StartPage(),
-          '/groups/form': (context) => const FormWidget(),
-          '/groups/note': (context) => const NoteWidget(),
-          '/groups/archive': (context) => const Archive(),
+          '/groups/form': (context) => const FormPage(),
+          '/groups/note': (context) => const TaskPage(),
+          '/groups/archive': (context) => const CompletedPage(),
         },
         initialRoute: '/groups',
       ),

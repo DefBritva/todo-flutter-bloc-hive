@@ -16,7 +16,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       try {
         await _todoService.init();
         emit(RegisterSuccessfulState());
-        emit(InitialState(_todoService.getNotes()));
+        emit(StartPageState(_todoService.getNotes()));
       } catch (e) {
         emit(RegisterErrorState(error: '$e'));
       }
