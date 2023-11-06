@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_todo_list/core/domain/entity/note.dart';
-import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 
 class StartBody extends StatelessWidget {
@@ -21,10 +22,6 @@ class StartBody extends StatelessWidget {
 class _GroupsList extends StatelessWidget {
   const _GroupsList();
 
-  static void showNote(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/note');
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(
@@ -42,13 +39,23 @@ class _GroupsList extends StatelessWidget {
                       children: [
                         SlidableAction(
                           flex: 1,
+                          onPressed: (context) {
+                            context
+                                .read<TodoBloc>()
+                                .add(AddFavoriteTask(index));
+                          },
+                          backgroundColor: Colors.yellow,
+                          foregroundColor: Colors.white,
+                          icon: Icons.star,
+                        ),
+                        SlidableAction(
+                          flex: 1,
                           onPressed: (context) =>
                               BlocProvider.of<TodoBloc>(context)
-                                  .add(CompletedNote(index)),
+                                  .add(ArchiveTask(index)),
                           backgroundColor: Colors.grey,
                           foregroundColor: Colors.white,
                           icon: Icons.archive,
-                          label: 'Archive',
                         ),
                         SlidableAction(
                           onPressed: (context) =>
@@ -57,7 +64,6 @@ class _GroupsList extends StatelessWidget {
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
-                          label: 'Delete',
                         ),
                       ],
                     ),
@@ -74,8 +80,8 @@ class _GroupsList extends StatelessWidget {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () {
                         BlocProvider.of<TodoBloc>(context)
-                            .add(NoteClicked(index));
-                        showNote(context);
+                            .add(TaskClicked(index));
+                        AppNavigation.showNote(context);
                       },
                     ),
                   );

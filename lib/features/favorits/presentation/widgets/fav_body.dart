@@ -3,22 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 
-class CompletedTasks extends StatelessWidget {
-  const CompletedTasks({super.key});
-  static void showNote(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/note');
-  }
+class FavoritsBody extends StatelessWidget {
+  const FavoritsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        if (state is CompletedState) {
-          return ListView.separated(
+        if (state is FavoritesState) {
+          return SizedBox(
+            height: UserSettings.height * 0.79,
+            width: double.infinity,
+            child: ListView.separated(
               itemBuilder: (context, index) {
-                Note note = state.completedNotes[index];
+                Note note = state.favorits[index];
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -27,15 +28,15 @@ class CompletedTasks extends StatelessWidget {
                         flex: 1,
                         onPressed: (context) => context
                             .read<TodoBloc>()
-                            .add(ArchiveCompletedTask(index)),
+                            .add(ArchiveFavoriteTask(index)),
                         backgroundColor: Colors.grey,
                         foregroundColor: Colors.white,
                         icon: Icons.archive,
                       ),
                       SlidableAction(
                         onPressed: (context) =>
-                            BlocProvider.of<TodoBloc>(context)
-                                .add(DeleteCompletedTask(indexToDelete: index)),
+                            BlocProvider.of<TodoBloc>(context).add(
+                                DeleteFavoritePressed(indexToDelete: index)),
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
@@ -45,23 +46,29 @@ class CompletedTasks extends StatelessWidget {
                   child: ListTile(
                     leading: Checkbox(
                       value: note.done,
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        context
+                            .read<TodoBloc>()
+                            .add(CompleteFavoriteTask(index));
+                      },
                     ),
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       BlocProvider.of<TodoBloc>(context)
-                          .add(CompletedTaskClicked(index));
-                      showNote(context);
+                          .add(FavoriteTaskClicked(index));
+                      AppNavigation.showNote(context);
                     },
                   ),
                 );
               },
               separatorBuilder: (context, index) => Divider(
-                    height: UserSettings.height * 0.001,
-                    color: Colors.black,
-                  ),
-              itemCount: state.completedNotes.length);
+                height: UserSettings.height * 0.001,
+                color: Colors.black,
+              ),
+              itemCount: state.favorits.length,
+            ),
+          );
         } else {
           return Container();
         }

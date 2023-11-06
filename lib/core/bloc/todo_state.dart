@@ -34,12 +34,12 @@ class InitialState extends TodoState {
 }
 
 class CompletedState extends TodoState {
-  final List<Note> archiveNotes;
+  final List<Note> completedNotes;
 
-  const CompletedState(this.archiveNotes);
+  const CompletedState(this.completedNotes);
 
   @override
-  List<Object?> get props => [archiveNotes];
+  List<Object?> get props => [completedNotes];
 }
 
 class StartPageState extends TodoState {
@@ -61,7 +61,38 @@ class NoteOpenedState extends StartPageState {
 class CompletedNoteOpenedState extends CompletedState {
   final int currentNote;
 
-  const CompletedNoteOpenedState(super.archiveNotes, this.currentNote);
+  const CompletedNoteOpenedState(super.completedNotes, this.currentNote);
   @override
-  List<Object?> get props => [currentNote];
+  List<Object?> get props => [super.completedNotes, currentNote];
+}
+
+class FavoritesState extends TodoState {
+  final List<Note> favorits;
+  const FavoritesState(this.favorits);
+
+  @override
+  List<Object?> get props => [favorits];
+}
+
+class FavoriteNoteOpenedState extends FavoritesState {
+  final int currentNote;
+
+  const FavoriteNoteOpenedState(super.favorits, this.currentNote);
+}
+
+class ArchiveState extends TodoState {
+  final List<Note> archive;
+  const ArchiveState(this.archive);
+
+  @override
+  List<Object?> get props => [archive];
+}
+
+class ArchiveNoteOpenedState extends ArchiveState {
+  final int currentNote;
+
+  const ArchiveNoteOpenedState(super.archive, this.currentNote);
+
+  @override
+  List<Object?> get props => [archive, currentNote];
 }

@@ -5,16 +5,24 @@ part 'note.g.dart';
 
 @HiveType(typeId: 1)
 class Note extends Equatable {
-  @HiveField(0)
+  @HiveField(1)
   final String name;
 
-  @HiveField(1)
+  @HiveField(2)
   final String text;
 
-  @HiveField(2)
+  @HiveField(3)
   final bool done;
 
-  const Note({required this.name, this.text = '', this.done = false});
+  @HiveField(4)
+  final bool isFavorite;
+
+  const Note({
+    required this.name,
+    this.text = '',
+    this.done = false,
+    this.isFavorite = false,
+  });
 
   @override
   List<Object?> get props => [name, text, done];

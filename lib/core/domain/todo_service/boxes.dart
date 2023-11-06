@@ -1,4 +1,6 @@
 part of 'todo.dart';
 
-late Box<Note> notesBox;
-late Box<Note> completedNotesBox;
+late Box<Note> tasksBox;
+late Box<Note> completedTasksBox;
+late Box<Note> favoritesTasksBox;
+late Box<Note> archiveTasksBox;

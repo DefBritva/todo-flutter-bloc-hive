@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 
 class FormBody extends StatefulWidget {
@@ -46,7 +46,7 @@ class _FormBodyState extends State<FormBody> {
               onPressed: () {
                 inputName = _formController.text;
                 BlocProvider.of<TodoBloc>(context)
-                    .add(SaveButtonPressed(noteName: inputName));
+                    .add(SaveButtonPressed(taskName: inputName));
                 backToStartPage(context);
               },
               style:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 import 'package:my_todo_list/features/task/presentation/widgets/task_appbar.dart';
 
@@ -39,7 +39,13 @@ class _TaskPageState extends State<TaskPage> {
         } else if (state is CompletedNoteOpenedState) {
           isEnabled = false;
           textfieldFocusNode.unfocus();
-          name = state.archiveNotes[state.currentNote].name;
+          name = state.completedNotes[state.currentNote].name;
+        } else if (state is FavoriteNoteOpenedState) {
+          name = state.favorits[state.currentNote].name;
+          isEnabled = true;
+        } else if (state is ArchiveNoteOpenedState) {
+          name = state.archive[state.currentNote].name;
+          isEnabled = false;
         }
         return Scaffold(
           appBar: TaskAppBar(
@@ -59,7 +65,13 @@ class _TaskPageState extends State<TaskPage> {
                       noteController.text = state.notes[state.currentNote].text;
                     } else if (state is CompletedNoteOpenedState) {
                       noteController.text =
-                          state.archiveNotes[state.currentNote].text;
+                          state.completedNotes[state.currentNote].text;
+                    } else if (state is FavoriteNoteOpenedState) {
+                      noteController.text =
+                          state.favorits[state.currentNote].text;
+                    } else if (state is ArchiveNoteOpenedState) {
+                      noteController.text =
+                          state.archive[state.currentNote].text;
                     }
                     return TextField(
                       enabled: isEnabled,

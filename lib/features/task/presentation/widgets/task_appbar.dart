@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 
 class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -60,7 +60,15 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                     final name = state.notes[index].name;
                     final text = noteController.text;
                     BlocProvider.of<TodoBloc>(context)
-                        .add(UpdateNote(index, name, text));
+                        .add(UpdateTask(index, name, text));
+                    FocusScope.of(context).unfocus();
+                  } else if (state is FavoriteNoteOpenedState) {
+                    final index = state.currentNote;
+                    final name = state.favorits[index].name;
+                    final text = noteController.text;
+                    context
+                        .read<TodoBloc>()
+                        .add(UpdateFavoriteTask(index, name, text));
                     FocusScope.of(context).unfocus();
                   }
                 },

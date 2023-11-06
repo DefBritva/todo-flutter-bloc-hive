@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_todo_list/core/domain/todo_service/todo.dart';
-import 'package:my_todo_list/core/presentation/bloc/my_bloc_observer.dart';
-import 'package:my_todo_list/core/presentation/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core//bloc/my_bloc_observer.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
+import 'package:my_todo_list/features/archive/archive_page.dart';
 import 'package:my_todo_list/features/completed/presentation/completed_page.dart';
+import 'package:my_todo_list/features/favorits/presentation/favorits_page.dart';
 import 'package:my_todo_list/features/form/presentation/form_page.dart';
 import 'package:my_todo_list/features/task/presentation/task_page.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,7 +51,9 @@ class App extends StatelessWidget {
           '/groups': (context) => const StartPage(),
           '/groups/form': (context) => const FormPage(),
           '/groups/note': (context) => const TaskPage(),
-          '/groups/archive': (context) => const CompletedPage(),
+          '/groups/completed': (context) => const CompletedPage(),
+          '/groups/favorites': (context) => const FavoritsPage(),
+          '/groups/archive': (context) => const ArchivePage()
         },
         initialRoute: '/groups',
       ),

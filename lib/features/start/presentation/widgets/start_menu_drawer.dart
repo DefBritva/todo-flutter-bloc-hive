@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_todo_list/core/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -19,11 +22,15 @@ class MenuDrawer extends StatelessWidget {
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<TodoBloc>().add(ArchiveOpen());
+                    AppNavigation.showArchive(context);
+                  },
                   child: const Text('open archive'),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      context.read<TodoBloc>().add(DeleteAllTasks()),
                   child: const Text('remove all tasks'),
                 )
               ],
