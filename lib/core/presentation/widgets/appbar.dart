@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/navigation.dart';
+import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
 
 class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TodoAppBar(this.title, {super.key});
@@ -10,14 +11,14 @@ class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TodoBloc, TodoState>(
+    return BlocBuilder<StartBloc, StartState>(
       builder: (context, state) {
         return AppBar(
           leading: state is StartPageState
               ? IconButton(
                   onPressed: () {
-                    context.read<TodoBloc>().add(FavoritesOpen());
-                    AppNavigation.showFavorites(context);
+                    // context.read<TodoBloc>().add(FavoritesOpen());
+                    // AppNavigation.showFavorites(context);
                   },
                   icon: const Icon(
                     Icons.star,
@@ -25,7 +26,7 @@ class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ))
               : IconButton(
                   onPressed: () {
-                    context.read<TodoBloc>().add(StartPageOpen());
+                    context.read<StartBloc>().add(StartPageOpen());
                     AppNavigation.showNotes(context);
                   },
                   icon: const Icon(
@@ -35,8 +36,8 @@ class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  context.read<TodoBloc>().add(CompletedOpen());
-                  AppNavigation.showCompleted(context);
+                  // context.read<TodoBloc>().add(CompletedOpen());
+                  // AppNavigation.showCompleted(context);
                 },
                 icon: const Icon(
                   Icons.done,

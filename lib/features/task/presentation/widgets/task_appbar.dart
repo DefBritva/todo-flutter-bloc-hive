@@ -2,7 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_todo_list/core/bloc/todo_bloc.dart';
+import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
+import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
+import 'package:my_todo_list/features/task/bloc/task_bloc.dart';
 
 class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TaskAppBar({
@@ -19,7 +22,11 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const BackButton(
+      leading: BackButton(
+        onPressed: () {
+          context.read<StartBloc>().add(StartPageOpen());
+          AppNavigation.back(context);
+        },
         color: Colors.white,
       ),
       backgroundColor: Colors.blueAccent,
@@ -54,23 +61,24 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
         textfieldFocusNode.hasFocus
             ? IconButton(
                 onPressed: () {
-                  final state = context.read<TodoBloc>().state;
-                  if (state is NoteOpenedState) {
-                    final index = state.currentNote;
-                    final name = state.notes[index].name;
+                  final state = context.read<TaskBloc>().state;
+                  if (state is TaskOpenedState) {
+                    final index = state.index;
+                    final name = state.note.name;
                     final text = noteController.text;
-                    BlocProvider.of<TodoBloc>(context)
+                    BlocProvider.of<TaskBloc>(context)
                         .add(UpdateTask(index, name, text));
                     FocusScope.of(context).unfocus();
-                  } else if (state is FavoriteNoteOpenedState) {
-                    final index = state.currentNote;
-                    final name = state.favorits[index].name;
-                    final text = noteController.text;
-                    context
-                        .read<TodoBloc>()
-                        .add(UpdateFavoriteTask(index, name, text));
-                    FocusScope.of(context).unfocus();
                   }
+                  //else if (state is FavoriteNoteOpenedState1) {
+                  //   final index = state.currentNote;
+                  //   final name = state.favorits[index].name;
+                  //   final text = noteController.text;
+                  //   context
+                  //       .read<TodoBloc>()
+                  //       .add(UpdateFavoriteTaskk(index, name, text));
+                  //   FocusScope.of(context).unfocus();
+                  // }
                 },
                 icon: const Icon(Icons.done),
                 color: Colors.white,

@@ -1,98 +1,98 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'todo_bloc.dart';
+// // ignore_for_file: public_member_api_docs, sort_constructors_first
+// part of 'todo_bloc.dart';
 
-abstract class TodoState extends Equatable {
-  const TodoState();
-}
+// sealed class TodoState1 extends Equatable {
+//   const TodoState1();
+// }
 
-class RegisteringServiceState extends TodoState {
-  @override
-  List<Object?> get props => [];
-}
+// class RegisteringServiceState1 extends TodoState1 {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-class RegisterSuccessfulState extends TodoState {
-  @override
-  List<Object?> get props => [];
-}
+// class RegisterSuccessfulState1 extends TodoState1 {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-class RegisterErrorState extends TodoState {
-  final String error;
-  const RegisterErrorState({
-    required this.error,
-  });
-  @override
-  List<Object?> get props => [error];
-}
+// class RegisterErrorState1 extends TodoState1 {
+//   final String error;
+//   const RegisterErrorState1({
+//     required this.error,
+//   });
+//   @override
+//   List<Object?> get props => [error];
+// }
 
-class InitialState extends TodoState {
-  final List<Note> notes;
+// class InitialState1 extends TodoState1 {
+//   final List<Note> notes;
 
-  const InitialState(this.notes);
+//   const InitialState1(this.notes);
 
-  @override
-  List<Object?> get props => [notes];
-}
+//   @override
+//   List<Object?> get props => [notes];
+// }
 
-class CompletedState extends TodoState {
-  final List<Note> completedNotes;
+// class CompletedState1 extends TodoState1 {
+//   final List<Note> completedNotes;
 
-  const CompletedState(this.completedNotes);
+//   const CompletedState1(this.completedNotes);
 
-  @override
-  List<Object?> get props => [completedNotes];
-}
+//   @override
+//   List<Object?> get props => [completedNotes];
+// }
 
-class StartPageState extends TodoState {
-  final List<Note> notes;
-  const StartPageState(this.notes);
+// class StartPageStateeeeee extends TodoState1 {
+//   final List<Note> notes;
+//   const StartPageStateeeeee(this.notes);
 
-  @override
-  List<Object?> get props => [notes];
-}
+//   @override
+//   List<Object?> get props => [notes];
+// }
 
-class NoteOpenedState extends StartPageState {
-  final int currentNote;
-  const NoteOpenedState(super.notes, this.currentNote);
+// class NoteOpenedState1 extends StartPageStateeeeee {
+//   final int currentNote;
+//   const NoteOpenedState1(super.notes, this.currentNote);
 
-  @override
-  List<Object?> get props => [notes, currentNote];
-}
+//   @override
+//   List<Object?> get props => [notes, currentNote];
+// }
 
-class CompletedNoteOpenedState extends CompletedState {
-  final int currentNote;
+// class CompletedNoteOpenedState1 extends CompletedState1 {
+//   final int currentNote;
 
-  const CompletedNoteOpenedState(super.completedNotes, this.currentNote);
-  @override
-  List<Object?> get props => [super.completedNotes, currentNote];
-}
+//   const CompletedNoteOpenedState1(super.completedNotes, this.currentNote);
+//   @override
+//   List<Object?> get props => [super.completedNotes, currentNote];
+// }
 
-class FavoritesState extends TodoState {
-  final List<Note> favorits;
-  const FavoritesState(this.favorits);
+// class FavoritesState1 extends TodoState1 {
+//   final List<Note> favorits;
+//   const FavoritesState1(this.favorits);
 
-  @override
-  List<Object?> get props => [favorits];
-}
+//   @override
+//   List<Object?> get props => [favorits];
+// }
 
-class FavoriteNoteOpenedState extends FavoritesState {
-  final int currentNote;
+// class FavoriteNoteOpenedState1 extends FavoritesState1 {
+//   final int currentNote;
 
-  const FavoriteNoteOpenedState(super.favorits, this.currentNote);
-}
+//   const FavoriteNoteOpenedState1(super.favorits, this.currentNote);
+// }
 
-class ArchiveState extends TodoState {
-  final List<Note> archive;
-  const ArchiveState(this.archive);
+// class ArchiveState1 extends TodoState1 {
+//   final List<Note> archive;
+//   const ArchiveState1(this.archive);
 
-  @override
-  List<Object?> get props => [archive];
-}
+//   @override
+//   List<Object?> get props => [archive];
+// }
 
-class ArchiveNoteOpenedState extends ArchiveState {
-  final int currentNote;
+// class ArchiveNoteOpenedState1 extends ArchiveState1 {
+//   final int currentNote;
 
-  const ArchiveNoteOpenedState(super.archive, this.currentNote);
+//   const ArchiveNoteOpenedState1(super.archive, this.currentNote);
 
-  @override
-  List<Object?> get props => [archive, currentNote];
-}
+//   @override
+//   List<Object?> get props => [archive, currentNote];
+// }

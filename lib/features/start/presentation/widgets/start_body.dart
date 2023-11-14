@@ -5,6 +5,8 @@ import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
+import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
+import 'package:my_todo_list/features/task/bloc/task_bloc.dart';
 
 class StartBody extends StatelessWidget {
   const StartBody({
@@ -24,7 +26,7 @@ class _GroupsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TodoBloc, TodoState>(
+    return BlocBuilder<StartBloc, StartState>(
       builder: (context, state) {
         if (state is StartPageState) {
           return SizedBox(
@@ -41,7 +43,7 @@ class _GroupsList extends StatelessWidget {
                           flex: 1,
                           onPressed: (context) {
                             context
-                                .read<TodoBloc>()
+                                .read<StartBloc>()
                                 .add(AddFavoriteTask(index));
                           },
                           backgroundColor: Colors.yellow,
@@ -51,7 +53,7 @@ class _GroupsList extends StatelessWidget {
                         SlidableAction(
                           flex: 1,
                           onPressed: (context) =>
-                              BlocProvider.of<TodoBloc>(context)
+                              BlocProvider.of<StartBloc>(context)
                                   .add(ArchiveTask(index)),
                           backgroundColor: Colors.grey,
                           foregroundColor: Colors.white,
@@ -59,7 +61,7 @@ class _GroupsList extends StatelessWidget {
                         ),
                         SlidableAction(
                           onPressed: (context) =>
-                              BlocProvider.of<TodoBloc>(context).add(
+                              BlocProvider.of<StartBloc>(context).add(
                                   DeleteButtonPressed(indexToDelete: index)),
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
@@ -72,15 +74,16 @@ class _GroupsList extends StatelessWidget {
                         value: note.done,
                         onChanged: (value) {
                           context
-                              .read<TodoBloc>()
+                              .read<StartBloc>()
                               .add(DoneButtonPressed(index));
                         },
                       ),
                       title: Text(note.name),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () {
-                        BlocProvider.of<TodoBloc>(context)
-                            .add(TaskClicked(index));
+                        context
+                            .read<TaskBloc>()
+                            .add(TaskOpen(index: index, note: note));
                         AppNavigation.showNote(context);
                       },
                     ),

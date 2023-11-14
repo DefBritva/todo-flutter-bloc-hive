@@ -8,6 +8,8 @@ import 'package:my_todo_list/features/archive/archive_page.dart';
 import 'package:my_todo_list/features/completed/presentation/completed_page.dart';
 import 'package:my_todo_list/features/favorits/presentation/favorits_page.dart';
 import 'package:my_todo_list/features/form/presentation/form_page.dart';
+import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
+import 'package:my_todo_list/features/task/bloc/task_bloc.dart';
 import 'package:my_todo_list/features/task/presentation/task_page.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -41,9 +43,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          TodoBloc(RepositoryProvider.of(context))..add(RegisterService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              StartBloc(RepositoryProvider.of(context))..add(RegisterService()),
+        ),
+        BlocProvider(
+          create: (context) => TaskBloc(RepositoryProvider.of(context)),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           useMaterial3: true,
@@ -53,9 +62,9 @@ class App extends StatelessWidget {
           '/groups': (context) => const StartPage(),
           '/groups/form': (context) => const FormPage(),
           '/groups/note': (context) => const TaskPage(),
-          '/groups/completed': (context) => const CompletedPage(),
-          '/groups/favorites': (context) => const FavoritsPage(),
-          '/groups/archive': (context) => const ArchivePage()
+          // '/groups/completed': (context) => const CompletedPage(),
+          // '/groups/favorites': (context) => const FavoritsPage(),
+          // '/groups/archive': (context) => const ArchivePage()
         },
         initialRoute: '/groups',
       ),

@@ -1,261 +1,192 @@
-part of 'todo_bloc.dart';
+// part of 'todo_bloc.dart';
 
-sealed class TodoEvent extends Equatable {}
+// sealed class TodoEvent extends Equatable {}
 
-final class RegisterService extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
+// final class DeleteFavoritePressedd extends TodoEvent {
+//   final int indexToDelete;
+//   DeleteFavoritePressedd({required this.indexToDelete});
 
-final class LoadTasks extends TodoEvent {
-  LoadTasks();
-  @override
-  List<Object?> get props => [];
-}
+//   @override
+//   List<Object?> get props => [indexToDelete];
+// }
 
-final class SaveButtonPressed extends TodoEvent {
-  final String taskName;
-  SaveButtonPressed({required this.taskName});
+// final class UnfavoriteTaskk extends TodoEvent {
+//   final int noteIndex;
 
-  @override
-  List<Object?> get props => [taskName];
-}
+//   UnfavoriteTaskk(this.noteIndex);
 
-final class DeleteButtonPressed extends TodoEvent {
-  final int indexToDelete;
-  DeleteButtonPressed({required this.indexToDelete});
+//   @override
+//   List<Object?> get props => [noteIndex];
+// }
 
-  @override
-  List<Object?> get props => [indexToDelete];
-}
+// final class UncompleteTaskk extends TodoEvent {
+//   final String noteName;
+//   final int noteIndex;
 
-final class DeleteFavoritePressed extends TodoEvent {
-  final int indexToDelete;
-  DeleteFavoritePressed({required this.indexToDelete});
+//   UncompleteTaskk(this.noteName, this.noteIndex);
+//   @override
+//   List<Object?> get props => [noteName, noteIndex];
+// }
 
-  @override
-  List<Object?> get props => [indexToDelete];
-}
+// final class CompleteFavoriteTaskk extends TodoEvent {
+//   final int taskIndex;
 
-final class UnfavoriteTask extends TodoEvent {
-  final int noteIndex;
+//   CompleteFavoriteTaskk(this.taskIndex);
 
-  UnfavoriteTask(this.noteIndex);
+//   @override
+//   List<Object?> get props => [taskIndex];
+// }
 
-  @override
-  List<Object?> get props => [noteIndex];
-}
+// final class DeleteCompletedTaskk extends TodoEvent {
+//   final int indexToDelete;
 
-final class FavoriteTask extends TodoEvent {
-  final int taskIndex;
+//   DeleteCompletedTaskk({required this.indexToDelete});
 
-  FavoriteTask(this.taskIndex);
+//   @override
+//   List<Object?> get props => [indexToDelete];
+// }
 
-  @override
-  List<Object?> get props => [taskIndex];
-}
+// final class TaskClickedd extends TodoEvent {
+//   final int index;
 
-final class CompleteTask extends TodoEvent {
-  final int taskIndex;
+//   TaskClickedd(this.index);
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  CompleteTask(this.taskIndex);
-  @override
-  List<Object?> get props => [taskIndex];
-}
+// final class CompletedTaskClickedd extends TodoEvent {
+//   final int index;
 
-final class UncompleteTask extends TodoEvent {
-  final String noteName;
-  final int noteIndex;
+//   CompletedTaskClickedd(this.index);
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  UncompleteTask(this.noteName, this.noteIndex);
-  @override
-  List<Object?> get props => [noteName, noteIndex];
-}
+// final class UpdateTaskk extends TodoEvent {
+//   final int index;
+//   final String name;
+//   final String text;
 
-final class CompleteFavoriteTask extends TodoEvent {
-  final int taskIndex;
+//   UpdateTaskk(this.index, this.name, this.text);
+//   @override
+//   List<Object?> get props => [index, name, text];
+// }
 
-  CompleteFavoriteTask(this.taskIndex);
+// final class CompletedOpenn extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-  @override
-  List<Object?> get props => [taskIndex];
-}
+// final class StartPageOpenn extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-final class DeleteCompletedTask extends TodoEvent {
-  final int indexToDelete;
+// final class FavoritesOpenn extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-  DeleteCompletedTask({required this.indexToDelete});
+// final class DoneFavoriteTaskk extends TodoEvent {
+//   final int index;
 
-  @override
-  List<Object?> get props => [indexToDelete];
-}
+//   DoneFavoriteTaskk(
+//     this.index,
+//   );
 
-final class TaskClicked extends TodoEvent {
-  final int index;
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  TaskClicked(this.index);
-  @override
-  List<Object?> get props => [index];
-}
+// final class ArchiveOpenn extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-final class CompletedTaskClicked extends TodoEvent {
-  final int index;
+// final class ArchiveFavoriteTaskk extends TodoEvent {
+//   final int index;
 
-  CompletedTaskClicked(this.index);
-  @override
-  List<Object?> get props => [index];
-}
+//   ArchiveFavoriteTaskk(this.index);
 
-final class UpdateTask extends TodoEvent {
-  final int index;
-  final String name;
-  final String text;
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  UpdateTask(this.index, this.name, this.text);
-  @override
-  List<Object?> get props => [index, name, text];
-}
+// final class ArchiveCompletedTaskk extends TodoEvent {
+//   final int index;
 
-final class CompletedOpen extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
+//   ArchiveCompletedTaskk(this.index);
 
-final class StartPageOpen extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-final class FavoritesOpen extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
+// final class UnarchiveTaskk extends TodoEvent {
+//   final int index;
 
-final class DoneButtonPressed extends TodoEvent {
-  final int index;
+//   UnarchiveTaskk(this.index);
 
-  DoneButtonPressed(
-    this.index,
-  );
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  @override
-  List<Object?> get props => [index];
-}
+// final class DeleteArchiveTaskk extends TodoEvent {
+//   final int index;
 
-final class DoneFavoriteTask extends TodoEvent {
-  final int index;
+//   DeleteArchiveTaskk(this.index);
 
-  DoneFavoriteTask(
-    this.index,
-  );
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  @override
-  List<Object?> get props => [index];
-}
+// final class ArchiveTaskClickedd extends TodoEvent {
+//   final int index;
 
-final class ArchiveOpen extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
+//   ArchiveTaskClickedd(this.index);
 
-final class ArchiveTask extends TodoEvent {
-  final int index;
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  ArchiveTask(this.index);
+// final class DeleteAllArchiveTaskss extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-  @override
-  List<Object?> get props => [index];
-}
+// final class DeleteAllFavoritesTaskss extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-final class ArchiveFavoriteTask extends TodoEvent {
-  final int index;
+// final class DeleteAllCompletedTaskss extends TodoEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-  ArchiveFavoriteTask(this.index);
+// final class AddFavoriteTaskk extends TodoEvent {
+//   final int index;
 
-  @override
-  List<Object?> get props => [index];
-}
+//   AddFavoriteTaskk(this.index);
 
-final class ArchiveCompletedTask extends TodoEvent {
-  final int index;
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  ArchiveCompletedTask(this.index);
+// final class FavoriteTaskClickedd extends TodoEvent {
+//   final int index;
 
-  @override
-  List<Object?> get props => [index];
-}
+//   FavoriteTaskClickedd(this.index);
 
-final class UnarchiveTask extends TodoEvent {
-  final int index;
+//   @override
+//   List<Object?> get props => [index];
+// }
 
-  UnarchiveTask(this.index);
+// final class UpdateFavoriteTaskk extends TodoEvent {
+//   final int index;
+//   final String name;
+//   final String text;
 
-  @override
-  List<Object?> get props => [index];
-}
-
-final class DeleteArchiveTask extends TodoEvent {
-  final int index;
-
-  DeleteArchiveTask(this.index);
-
-  @override
-  List<Object?> get props => [index];
-}
-
-final class ArchiveTaskClicked extends TodoEvent {
-  final int index;
-
-  ArchiveTaskClicked(this.index);
-
-  @override
-  List<Object?> get props => [index];
-}
-
-final class DeleteAllArchiveTasks extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-final class DeleteAllTasks extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-final class DeleteAllFavoritesTasks extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-final class DeleteAllCompletedTasks extends TodoEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-final class AddFavoriteTask extends TodoEvent {
-  final int index;
-
-  AddFavoriteTask(this.index);
-
-  @override
-  List<Object?> get props => [index];
-}
-
-final class FavoriteTaskClicked extends TodoEvent {
-  final int index;
-
-  FavoriteTaskClicked(this.index);
-
-  @override
-  List<Object?> get props => [index];
-}
-
-final class UpdateFavoriteTask extends TodoEvent {
-  final int index;
-  final String name;
-  final String text;
-
-  UpdateFavoriteTask(this.index, this.name, this.text);
-  @override
-  List<Object?> get props => [index, name, text];
-}
+//   UpdateFavoriteTaskk(this.index, this.name, this.text);
+//   @override
+//   List<Object?> get props => [index, name, text];
+// }
