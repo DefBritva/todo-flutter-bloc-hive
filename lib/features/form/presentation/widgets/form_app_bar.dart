@@ -10,13 +10,11 @@ class FormAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.blueAccent,
-      title: Padding(
-        padding: EdgeInsets.only(left: UserSettings.width * 0.17),
-        child: const Text(
-          'Новая заметка',
-          style: TextStyle(color: Colors.white),
-        ),
+      title: const Text(
+        'Новая заметка',
+        style: TextStyle(color: Colors.white),
       ),
+      centerTitle: true,
     );
   }
 

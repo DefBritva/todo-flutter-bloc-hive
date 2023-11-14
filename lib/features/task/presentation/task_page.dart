@@ -73,19 +73,21 @@ class _TaskPageState extends State<TaskPage> {
                       noteController.text =
                           state.archive[state.currentNote].text;
                     }
-                    return TextField(
-                      enabled: isEnabled,
-                      focusNode: textfieldFocusNode,
-                      controller: noteController,
-                      onTap: () => setState(() {
-                        textfieldFocusNode.requestFocus();
-                      }),
-                      style: const TextStyle(fontSize: 20),
-                      maxLines: 99999,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: "",
+                    return Theme(
+                      data: ThemeData(disabledColor: Colors.black),
+                      child: TextField(
+                        enabled: isEnabled,
+                        focusNode: textfieldFocusNode,
+                        controller: noteController,
+                        onTap: () => setState(() {
+                          textfieldFocusNode.requestFocus();
+                        }),
+                        style: const TextStyle(fontSize: 20),
+                        decoration:
+                            const InputDecoration.collapsed(hintText: ''),
+                        maxLines: 99999,
+                        autofocus: false,
                       ),
-                      autofocus: false,
                     );
                   },
                 ),

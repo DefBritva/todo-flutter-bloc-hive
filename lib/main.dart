@@ -45,7 +45,9 @@ class App extends StatelessWidget {
       create: (context) =>
           TodoBloc(RepositoryProvider.of(context))..add(RegisterService()),
       child: MaterialApp(
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
         debugShowCheckedModeBanner: false,
         routes: {
           '/groups': (context) => const StartPage(),

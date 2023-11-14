@@ -11,14 +11,16 @@ class MenuDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: UserSettings.height * 0.66),
-      child: SizedBox(
-        height: UserSettings.height * 0.12,
-        width: UserSettings.width * 0.45,
-        child: Drawer(
-          child: Container(
-            color: Colors.white,
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding:
+            EdgeInsets.only(top: Scaffold.of(context).appBarMaxHeight ?? 0),
+        child: SizedBox(
+          height: 100,
+          width: UserSettings.width * 0.45,
+          child: Drawer(
+            backgroundColor: Colors.white,
             child: Column(
               children: [
                 TextButton(
