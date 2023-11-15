@@ -33,13 +33,10 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
+        noteController.text = state.note.text;
         if (state is TaskOpenedState) {
           name = state.note.name;
           isEnabled = true;
-          // } else if (state is CompletedNoteOpenedState1) {
-          //   isEnabled = false;
-          //   textfieldFocusNode.unfocus();
-          //   name = state.name;
         } else if (state is FavoriteTaskOpenedState) {
           name = state.note.name;
           isEnabled = true;
@@ -62,49 +59,26 @@ class _TaskPageState extends State<TaskPage> {
                   horizontal: UserSettings.width * 0.05,
                   vertical: UserSettings.height * 0.01),
               child: SizedBox(
-                width: UserSettings.width * 0.9,
-                child: BlocBuilder<TaskBloc, TaskState>(
-                  builder: (context, state) {
-                    // if (state is TaskOpenedState) {
-                    //   noteController.text = state.note.text;
-                    //   // } else if (state is CompletedNoteOpenedState1) {
-                    //   //   noteController.text =
-                    //   //       state.completedNotes[state.currentNote].text;
-                    //   // } else if (state is FavoriteNoteOpenedState1) {
-                    //   //   noteController.text =
-                    //   //       state.favorits[state.currentNote].text;
-                    //   // } else if (state is ArchiveNoteOpenedState1) {
-                    //   //   noteController.text =
-                    //   //       state.archive[state.currentNote].text;
-                    // } else if (state is FavoriteTaskOpenedState) {
-                    //   noteController.text = state.note.text;
-                    // } else if (state is ArchiveNoteOpenedState) {
-                    //   noteController.text = state.note.text;
-                    // }
-                    noteController.text = state.note.text;
-                    return Theme(
-                      data: ThemeData(disabledColor: Colors.black),
-                      child: TextField(
-                        enabled: isEnabled,
-                        focusNode: textfieldFocusNode,
-                        controller: noteController,
-                        onTap: () {
-                          if (!textfieldFocusNode.hasFocus) {
-                            setState(() {
-                              textfieldFocusNode.requestFocus();
-                            });
-                          }
-                        },
-                        style: const TextStyle(fontSize: 20),
-                        decoration:
-                            const InputDecoration.collapsed(hintText: ''),
-                        maxLines: 99999,
-                        autofocus: false,
-                      ),
-                    );
-                  },
-                ),
-              ),
+                  width: UserSettings.width * 0.9,
+                  child: Theme(
+                    data: ThemeData(disabledColor: Colors.black),
+                    child: TextField(
+                      enabled: isEnabled,
+                      focusNode: textfieldFocusNode,
+                      controller: noteController,
+                      onTap: () {
+                        if (!textfieldFocusNode.hasFocus) {
+                          setState(() {
+                            textfieldFocusNode.requestFocus();
+                          });
+                        }
+                      },
+                      style: const TextStyle(fontSize: 20),
+                      decoration: const InputDecoration.collapsed(hintText: ''),
+                      maxLines: 99999,
+                      autofocus: false,
+                    ),
+                  )),
             ),
           ),
         );
