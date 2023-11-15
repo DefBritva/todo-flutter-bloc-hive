@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_todo_list/core/domain/entity/note.dart';
-import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
 import 'package:my_todo_list/features/start/bloc/start_bloc.dart';

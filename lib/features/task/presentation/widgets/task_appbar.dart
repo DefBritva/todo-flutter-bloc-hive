@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/core/utils/navigation.dart';
 import 'package:my_todo_list/core/utils/user_settings.dart';
+import 'package:my_todo_list/features/archive/bloc/archive_bloc.dart';
+import 'package:my_todo_list/features/completed/bloc/completed_bloc.dart';
+import 'package:my_todo_list/features/favorits/bloc/favorits_bloc.dart';
 import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
 import 'package:my_todo_list/features/task/bloc/task_bloc.dart';
 
@@ -22,12 +24,27 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: BackButton(
-        onPressed: () {
-          context.read<StartBloc>().add(StartPageOpen());
-          AppNavigation.back(context);
+      leading: BlocBuilder<TaskBloc, TaskState>(
+        builder: (context, state) {
+          return BackButton(
+            onPressed: () {
+              if (state is TaskOpenedState) {
+                context.read<StartBloc>().add(StartPageOpen());
+                AppNavigation.back(context);
+              } else if (state is FavoriteTaskOpenedState) {
+                context.read<FavoritesBloc>().add(FavoritesOpen());
+                AppNavigation.back(context);
+              } else if (state is ArchiveNoteOpenedState) {
+                context.read<ArchiveBloc>().add(ArchiveOpen());
+                AppNavigation.back(context);
+              } else if (state is CompletedNoteOpenedState) {
+                context.read<CompletedBloc>().add(CompletedOpen());
+                AppNavigation.back(context);
+              }
+            },
+            color: Colors.white,
+          );
         },
-        color: Colors.white,
       ),
       backgroundColor: Colors.blueAccent,
       actions: [
@@ -69,16 +86,15 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                     BlocProvider.of<TaskBloc>(context)
                         .add(UpdateTask(index, name, text));
                     FocusScope.of(context).unfocus();
+                  } else if (state is FavoriteTaskOpenedState) {
+                    final index = state.index;
+                    final name = state.note.name;
+                    final text = noteController.text;
+                    context
+                        .read<TaskBloc>()
+                        .add(UpdateFavoriteTask(index, name, text));
+                    FocusScope.of(context).unfocus();
                   }
-                  //else if (state is FavoriteNoteOpenedState1) {
-                  //   final index = state.currentNote;
-                  //   final name = state.favorits[index].name;
-                  //   final text = noteController.text;
-                  //   context
-                  //       .read<TodoBloc>()
-                  //       .add(UpdateFavoriteTaskk(index, name, text));
-                  //   FocusScope.of(context).unfocus();
-                  // }
                 },
                 icon: const Icon(Icons.done),
                 color: Colors.white,

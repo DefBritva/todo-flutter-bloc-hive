@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_todo_list/core/domain/todo_service/todo.dart';
 import 'package:my_todo_list/core//bloc/my_bloc_observer.dart';
-import 'package:my_todo_list/core/bloc/todo_bloc.dart';
 import 'package:my_todo_list/features/archive/archive_page.dart';
+import 'package:my_todo_list/features/archive/bloc/archive_bloc.dart';
+import 'package:my_todo_list/features/completed/bloc/completed_bloc.dart';
 import 'package:my_todo_list/features/completed/presentation/completed_page.dart';
+import 'package:my_todo_list/features/favorits/bloc/favorits_bloc.dart';
 import 'package:my_todo_list/features/favorits/presentation/favorits_page.dart';
 import 'package:my_todo_list/features/form/presentation/form_page.dart';
 import 'package:my_todo_list/features/start/bloc/start_bloc.dart';
@@ -52,6 +54,15 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => TaskBloc(RepositoryProvider.of(context)),
         ),
+        BlocProvider(
+          create: (context) => FavoritesBloc(RepositoryProvider.of(context)),
+        ),
+        BlocProvider(
+          create: ((context) => ArchiveBloc(RepositoryProvider.of(context))),
+        ),
+        BlocProvider(
+          create: ((context) => CompletedBloc(RepositoryProvider.of(context))),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -62,9 +73,9 @@ class App extends StatelessWidget {
           '/groups': (context) => const StartPage(),
           '/groups/form': (context) => const FormPage(),
           '/groups/note': (context) => const TaskPage(),
-          // '/groups/completed': (context) => const CompletedPage(),
-          // '/groups/favorites': (context) => const FavoritsPage(),
-          // '/groups/archive': (context) => const ArchivePage()
+          '/groups/completed': (context) => const CompletedPage(),
+          '/groups/favorites': (context) => const FavoritsPage(),
+          '/groups/archive': (context) => const ArchivePage()
         },
         initialRoute: '/groups',
       ),

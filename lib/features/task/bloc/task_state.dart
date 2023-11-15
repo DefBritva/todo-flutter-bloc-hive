@@ -1,20 +1,47 @@
 part of 'task_bloc.dart';
 
 sealed class TaskState extends Equatable {
-  const TaskState();
+  final int index;
+  final Note note;
+  const TaskState({
+    required this.index,
+    required this.note,
+  });
+  @override
+  List<Object?> get props => [index, note];
 }
 
 final class TaskInitial extends TaskState {
-  @override
-  List<Object?> get props => [];
+  const TaskInitial({
+    required super.index,
+    required super.note,
+  });
 }
 
 class TaskOpenedState extends TaskState {
-  final int index;
-  final Note note;
+  const TaskOpenedState({
+    required super.index,
+    required super.note,
+  });
+}
 
-  const TaskOpenedState({required this.note, required this.index});
+class FavoriteTaskOpenedState extends TaskState {
+  const FavoriteTaskOpenedState({
+    required super.index,
+    required super.note,
+  });
+}
 
-  @override
-  List<Object?> get props => [note, index];
+class ArchiveNoteOpenedState extends TaskState {
+  const ArchiveNoteOpenedState({
+    required super.index,
+    required super.note,
+  });
+}
+
+class CompletedNoteOpenedState extends TaskState {
+  const CompletedNoteOpenedState({
+    required super.index,
+    required super.note,
+  });
 }
