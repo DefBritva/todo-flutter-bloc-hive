@@ -16,9 +16,9 @@ final class LoadTasks extends StartEvent {
   List<Object?> get props => [];
 }
 
-final class SaveButtonPressed extends StartEvent {
+final class CreateButtonPressed extends StartEvent {
   final String taskName;
-  const SaveButtonPressed({required this.taskName});
+  const CreateButtonPressed({required this.taskName});
 
   @override
   List<Object?> get props => [taskName];

@@ -10,7 +10,7 @@ class FormAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.blueAccent,
       title: const Text(
-        'Новая заметка',
+        'New task',
         style: TextStyle(color: Colors.white),
       ),
       centerTitle: true,

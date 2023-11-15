@@ -26,7 +26,7 @@ class StartBloc extends Bloc<StartEvent, StartState> {
       emit(newState);
     });
 
-    on<SaveButtonPressed>((event, emit) async {
+    on<CreateButtonPressed>((event, emit) async {
       await _todoService.addTask(event.taskName);
       final newState = StartPageState(_todoService.getTasks());
       emit(newState);

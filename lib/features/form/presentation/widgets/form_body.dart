@@ -36,7 +36,7 @@ class _FormBodyState extends State<FormBody> {
                     borderSide: BorderSide(
                         color: Colors.black.withOpacity(0.75), width: 1.5),
                   ),
-                  hintText: "Введите имя заметки",
+                  hintText: "Task name",
                   border: const OutlineInputBorder()),
             ),
             SizedBox(
@@ -46,12 +46,12 @@ class _FormBodyState extends State<FormBody> {
               onPressed: () {
                 inputName = _formController.text;
                 BlocProvider.of<StartBloc>(context)
-                    .add(SaveButtonPressed(taskName: inputName));
+                    .add(CreateButtonPressed(taskName: inputName));
                 backToStartPage(context);
               },
               style:
                   ElevatedButton.styleFrom(backgroundColor: Colors.greenAccent),
-              child: const Text('Сохранить'),
+              child: const Text('Create'),
             )
           ],
         ),
