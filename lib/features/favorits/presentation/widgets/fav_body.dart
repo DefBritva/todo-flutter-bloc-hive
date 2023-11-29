@@ -57,7 +57,7 @@ class FavoritsBody extends StatelessWidget {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       BlocProvider.of<TaskBloc>(context)
-                          .add(FavoriteTaskOpen(index: index, note: note));
+                          .add(FavoriteTaskOpen(index: index, task: note));
                       AppNavigation.showNote(context);
                     },
                   ),

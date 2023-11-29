@@ -20,7 +20,7 @@ class CompletedTasks extends StatelessWidget {
         if (state is CompletedPageState) {
           return ListView.separated(
               itemBuilder: (context, index) {
-                Note note = state.completedNotes[index];
+                Note note = state.completedTasks[index];
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -52,9 +52,10 @@ class CompletedTasks extends StatelessWidget {
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
+                      final task = state.completedTasks[index];
                       context
                           .read<TaskBloc>()
-                          .add(CompletedTaskOpen(index, note));
+                          .add(CompletedTaskOpen(index: index, task: task));
                       AppNavigation.showNote(context);
                     },
                   ),
@@ -64,7 +65,7 @@ class CompletedTasks extends StatelessWidget {
                     height: UserSettings.height * 0.001,
                     color: Colors.black,
                   ),
-              itemCount: state.completedNotes.length);
+              itemCount: state.completedTasks.length);
         } else {
           return Container();
         }

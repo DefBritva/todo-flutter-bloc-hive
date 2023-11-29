@@ -8,11 +8,13 @@ part 'archive_state.dart';
 
 class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
   final TodoService _todoService;
-  ArchiveBloc(this._todoService) : super(ArchiveInitial()) {
+  ArchiveBloc(this._todoService)
+      : super(ArchiveInitial(archive: _todoService.getArchiveTasks())) {
     on<ArchiveEvent>((event, emit) {});
 
     on<ArchiveOpen>((event, emit) {
-      final newState = ArchivePageState(_todoService.getArchiveTasks());
+      final newState =
+          ArchivePageState(archive: _todoService.getArchiveTasks());
       emit(newState);
     });
 
@@ -20,24 +22,28 @@ class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
       final note = _todoService.getArchiveTasks()[event.index];
       if (note.done) {
         await _todoService.unarchiveCompletedTask(event.index);
-        final newState = ArchivePageState(_todoService.getArchiveTasks());
+        final newState =
+            ArchivePageState(archive: _todoService.getArchiveTasks());
         emit(newState);
       } else {
         await _todoService.unarchiveTask(event.index);
-        final newState = ArchivePageState(_todoService.getArchiveTasks());
+        final newState =
+            ArchivePageState(archive: _todoService.getArchiveTasks());
         emit(newState);
       }
     });
 
     on<DeleteArchiveTask>((event, emit) async {
       await _todoService.deleteArchiveTask(event.index);
-      final newState = ArchivePageState(_todoService.getArchiveTasks());
+      final newState =
+          ArchivePageState(archive: _todoService.getArchiveTasks());
       emit(newState);
     });
 
     on<DeleteAllArchiveTasks>((event, emit) async {
       await _todoService.deleteAllArchiveTasks();
-      final newState = ArchivePageState(_todoService.getArchiveTasks());
+      final newState =
+          ArchivePageState(archive: _todoService.getArchiveTasks());
       emit(newState);
     });
   }

@@ -9,49 +9,49 @@ part 'task_state.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TodoService _todoService;
   TaskBloc(this._todoService)
-      : super(const TaskInitial(index: 0, note: Note(name: ''))) {
+      : super(const TaskInitial(index: 0, task: Note(name: ''))) {
     on<TaskEvent>((event, emit) {});
 
     on<TaskOpen>((event, emit) {
-      final newState = TaskOpenedState(index: event.index, note: event.note);
+      final newState = TaskOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
 
     on<UpdateTask>((event, emit) async {
       final index = event.index;
-      final name = event.name;
-      final text = event.text;
+      final name = event.task.name;
+      final text = event.task.text;
       await _todoService.updateTask(index, name, text, false);
       final newState =
-          TaskOpenedState(note: Note(name: name, text: text), index: index);
+          TaskOpenedState(task: Note(name: name, text: text), index: index);
       emit(newState);
     });
 
     on<FavoriteTaskOpen>((event, emit) {
       final newState =
-          FavoriteTaskOpenedState(index: event.index, note: event.note);
+          FavoriteTaskOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
 
     on<UpdateFavoriteTask>((event, emit) async {
       final isDone = _todoService.getFavoritesTasks()[event.index].done;
-      final name = event.name;
-      final text = event.text;
+      final name = event.task.name;
+      final text = event.task.text;
       await _todoService.updateFavoriteTask(
-          event.index, event.name, event.text, isDone);
+          event.index, event.task.name, event.task.text, isDone);
       final newState = FavoriteTaskOpenedState(
-          index: event.index, note: Note(name: name, text: text));
+          index: event.index, task: Note(name: name, text: text));
       emit(newState);
     });
     on<ArchiveTaskOpen>((event, emit) {
       final newState =
-          ArchiveNoteOpenedState(index: event.index, note: event.note);
+          ArchiveNoteOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
 
     on<CompletedTaskOpen>((event, emit) {
       final newState =
-          CompletedNoteOpenedState(index: event.index, note: event.note);
+          CompletedNoteOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
   }

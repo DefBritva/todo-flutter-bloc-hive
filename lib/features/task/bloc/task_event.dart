@@ -1,63 +1,33 @@
 part of 'task_bloc.dart';
 
 sealed class TaskEvent extends Equatable {
-  const TaskEvent();
+  final int index;
+  final Note task;
+  const TaskEvent({required this.index, required this.task});
+  @override
+  List<Object?> get props => [index, task];
 }
 
 final class UpdateTask extends TaskEvent {
-  final int index;
-  final String name;
-  final String text;
-
-  const UpdateTask(this.index, this.name, this.text);
-  @override
-  List<Object?> get props => [index, name, text];
+  const UpdateTask({required super.index, required super.task});
 }
 
 final class TaskOpen extends TaskEvent {
-  final int index;
-  final Note note;
-
-  const TaskOpen({required this.index, required this.note});
-  @override
-  List<Object?> get props => [index, note];
+  const TaskOpen({required super.index, required super.task});
 }
 
 final class FavoriteTaskOpen extends TaskEvent {
-  final int index;
-  final Note note;
-
-  const FavoriteTaskOpen({required this.index, required this.note});
-
-  @override
-  List<Object?> get props => [index, note];
+  const FavoriteTaskOpen({required super.index, required super.task});
 }
 
 final class UpdateFavoriteTask extends TaskEvent {
-  final int index;
-  final String name;
-  final String text;
-
-  const UpdateFavoriteTask(this.index, this.name, this.text);
-  @override
-  List<Object?> get props => [index, name, text];
+  const UpdateFavoriteTask({required super.index, required super.task});
 }
 
 final class ArchiveTaskOpen extends TaskEvent {
-  final int index;
-  final Note note;
-
-  const ArchiveTaskOpen(this.index, this.note);
-
-  @override
-  List<Object?> get props => [index, note];
+  const ArchiveTaskOpen({required super.index, required super.task});
 }
 
 final class CompletedTaskOpen extends TaskEvent {
-  final int index;
-  final Note note;
-
-  const CompletedTaskOpen(this.index, this.note);
-  @override
-  List<Object?> get props => [index, note];
+  const CompletedTaskOpen({required super.index, required super.task});
 }

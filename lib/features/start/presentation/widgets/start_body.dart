@@ -32,7 +32,7 @@ class _GroupsList extends StatelessWidget {
           width: double.infinity,
           child: ListView.separated(
               itemBuilder: (context, index) {
-                Note note = state.notes[index];
+                Note task = state.tasks[index];
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -67,17 +67,17 @@ class _GroupsList extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: Checkbox(
-                      value: note.done,
+                      value: task.done,
                       onChanged: (value) {
                         context.read<StartBloc>().add(DoneButtonPressed(index));
                       },
                     ),
-                    title: Text(note.name),
+                    title: Text(task.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       context
                           .read<TaskBloc>()
-                          .add(TaskOpen(index: index, note: note));
+                          .add(TaskOpen(index: index, task: task));
                       AppNavigation.showNote(context);
                     },
                   ),
@@ -87,7 +87,7 @@ class _GroupsList extends StatelessWidget {
                     height: UserSettings.height * 0.001,
                     color: Colors.black,
                   ),
-              itemCount: state.notes.length),
+              itemCount: state.tasks.length),
         );
       },
     );

@@ -1,5 +1,6 @@
-import 'package:hive/hive.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
 part 'note.g.dart';
 
@@ -26,4 +27,18 @@ class Note extends Equatable {
 
   @override
   List<Object?> get props => [name, text, done];
+
+  Note clone({
+    String? name,
+    String? text,
+    bool? done,
+    bool? isFavorite,
+  }) {
+    return Note(
+      name: name ?? this.name,
+      text: text ?? this.text,
+      done: done ?? this.done,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }

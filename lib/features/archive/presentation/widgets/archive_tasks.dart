@@ -51,8 +51,9 @@ class ArchiveTasks extends StatelessWidget {
                     title: Text(note.name),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
+                      final task = state.archive[index];
                       BlocProvider.of<TaskBloc>(context)
-                          .add(ArchiveTaskOpen(index, note));
+                          .add(ArchiveTaskOpen(index: index, task: task));
                       showNote(context);
                     },
                   ),

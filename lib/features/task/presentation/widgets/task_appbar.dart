@@ -81,18 +81,16 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                   final state = context.read<TaskBloc>().state;
                   if (state is TaskOpenedState) {
                     final index = state.index;
-                    final name = state.note.name;
-                    final text = noteController.text;
+                    final task = state.task.clone(text: noteController.text);
                     BlocProvider.of<TaskBloc>(context)
-                        .add(UpdateTask(index, name, text));
+                        .add(UpdateTask(index: index, task: task));
                     FocusScope.of(context).unfocus();
                   } else if (state is FavoriteTaskOpenedState) {
                     final index = state.index;
-                    final name = state.note.name;
-                    final text = noteController.text;
+                    final task = state.task.clone(text: noteController.text);
                     context
                         .read<TaskBloc>()
-                        .add(UpdateFavoriteTask(index, name, text));
+                        .add(UpdateFavoriteTask(index: index, task: task));
                     FocusScope.of(context).unfocus();
                   }
                 },

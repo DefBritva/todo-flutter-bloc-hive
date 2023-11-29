@@ -1,18 +1,16 @@
 part of 'archive_bloc.dart';
 
 sealed class ArchiveState extends Equatable {
-  const ArchiveState();
+  final List<Note> archive;
+  const ArchiveState({required this.archive});
+  @override
+  List<Object?> get props => [archive];
 }
 
 final class ArchiveInitial extends ArchiveState {
-  @override
-  List<Object?> get props => [];
+  const ArchiveInitial({required super.archive});
 }
 
 final class ArchivePageState extends ArchiveState {
-  final List<Note> archive;
-  const ArchivePageState(this.archive);
-
-  @override
-  List<Object?> get props => [archive];
+  const ArchivePageState({required super.archive});
 }

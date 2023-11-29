@@ -33,20 +33,20 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
-        noteController.text = state.note.text;
+        noteController.text = state.task.text;
         if (state is TaskOpenedState) {
-          name = state.note.name;
+          name = state.task.name;
           isEnabled = true;
         } else if (state is FavoriteTaskOpenedState) {
-          name = state.note.name;
+          name = state.task.name;
           isEnabled = true;
         } else if (state is ArchiveNoteOpenedState) {
-          name = state.note.name;
+          name = state.task.name;
           isEnabled = false;
         } else if (state is CompletedNoteOpenedState) {
           textfieldFocusNode.unfocus();
           isEnabled = false;
-          name = state.note.name;
+          name = state.task.name;
         }
         return Scaffold(
           appBar: TaskAppBar(

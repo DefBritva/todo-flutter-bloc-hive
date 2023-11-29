@@ -2,54 +2,39 @@
 part of 'start_bloc.dart';
 
 sealed class StartState extends Equatable {
-  final List<Note> notes;
-  const StartState({required this.notes});
+  final List<Note> tasks;
+  const StartState({required this.tasks});
   @override
-  List<Object?> get props => [notes];
-  StartState copyWith({
-    List<Note>? notes,
+  List<Object?> get props => [tasks];
+  StartState clone({
+    List<Note>? tasks,
   }) {
-    return StartPageState(notes: notes ?? this.notes);
+    return StartPageState(tasks: tasks ?? this.tasks);
   }
-
-  StartState clone({List<Note>? notes}) => copyWith(notes: notes);
-}
-
-final class StartInitial extends StartState {
-  const StartInitial({required super.notes});
-
-  @override
-  List<Object?> get props => [];
 }
 
 class RegisteringServiceState extends StartState {
-  const RegisteringServiceState({required super.notes});
-
-  @override
-  List<Object?> get props => [];
+  const RegisteringServiceState({required super.tasks});
 }
 
 class RegisterSuccessfulState extends StartState {
-  const RegisterSuccessfulState({required super.notes});
-
-  @override
-  List<Object?> get props => [];
+  const RegisterSuccessfulState({required super.tasks});
 }
 
 class RegisterErrorState extends StartState {
   final String error;
   const RegisterErrorState({
     required this.error,
-    required super.notes,
+    required super.tasks,
   });
   @override
-  List<Object?> get props => [error, notes];
+  List<Object?> get props => [error, tasks];
 }
 
 class InitialState extends StartState {
-  const InitialState({required super.notes});
+  const InitialState({required super.tasks});
 }
 
 class StartPageState extends StartState {
-  const StartPageState({required super.notes});
+  const StartPageState({required super.tasks});
 }
