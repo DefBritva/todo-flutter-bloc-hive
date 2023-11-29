@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/domain/todo_service/todo.dart';
+import 'package:freezed/builder.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'start_event.dart';
 part 'start_state.dart';

@@ -1,6 +1,6 @@
 part of 'start_bloc.dart';
 
-sealed class StartState extends Equatable {
+abstract class StartState extends Equatable {
   const StartState();
 }
 
