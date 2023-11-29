@@ -1,4 +1,4 @@
-part of 'todo.dart';
+part of 'box_service.dart';
 
 late Box<Note> tasksBox;
 late Box<Note> completedTasksBox;

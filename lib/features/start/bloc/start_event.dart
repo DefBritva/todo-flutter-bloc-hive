@@ -4,7 +4,7 @@ sealed class StartEvent extends Equatable {
   const StartEvent();
 }
 
-final class RegisterService extends StartEvent {
+final class InitServices extends StartEvent {
   @override
   List<Object?> get props => [];
 }

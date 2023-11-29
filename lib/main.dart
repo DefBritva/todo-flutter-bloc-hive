@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:my_todo_list/core/domain/todo_service/todo.dart';
+import 'package:my_todo_list/core/domain/services/archive_task_service.dart';
+import 'package:my_todo_list/core/domain/services/completed_task_service.dart';
+import 'package:my_todo_list/core/domain/services/favorites_task_service.dart';
+import 'package:my_todo_list/core/domain/services/task_service.dart';
+import 'package:my_todo_list/core/domain/services/box_service.dart';
 import 'package:my_todo_list/core//bloc/my_bloc_observer.dart';
 import 'package:my_todo_list/features/archive/archive_page.dart';
 import 'package:my_todo_list/features/archive/bloc/archive_bloc.dart';
@@ -31,8 +35,24 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => TodoService(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => BoxService(),
+        ),
+        RepositoryProvider(
+          create: (context) => TasksService(),
+        ),
+        RepositoryProvider(
+          create: (context) => CompletedTasksService(),
+        ),
+        RepositoryProvider(
+          create: (context) => FavoritesTasksService(),
+        ),
+        RepositoryProvider(
+          create: (context) => ArchiveTasksService(),
+        ),
+      ],
       child: const App(),
     );
   }
@@ -48,20 +68,27 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              StartBloc(RepositoryProvider.of(context))..add(RegisterService()),
+          create: (context) => StartBloc(
+              RepositoryProvider.of<TasksService>(context),
+              RepositoryProvider.of<BoxService>(context))
+            ..add(InitServices()),
         ),
         BlocProvider(
-          create: (context) => TaskBloc(RepositoryProvider.of(context)),
+          create: (context) => TaskBloc(
+              RepositoryProvider.of<TasksService>(context),
+              RepositoryProvider.of<FavoritesTasksService>(context)),
         ),
         BlocProvider(
-          create: (context) => FavoritesBloc(RepositoryProvider.of(context)),
+          create: (context) => FavoritesBloc(
+              RepositoryProvider.of<FavoritesTasksService>(context)),
         ),
         BlocProvider(
-          create: ((context) => ArchiveBloc(RepositoryProvider.of(context))),
+          create: ((context) =>
+              ArchiveBloc(RepositoryProvider.of<ArchiveTasksService>(context))),
         ),
         BlocProvider(
-          create: ((context) => CompletedBloc(RepositoryProvider.of(context))),
+          create: ((context) => CompletedBloc(
+              RepositoryProvider.of<CompletedTasksService>(context))),
         )
       ],
       child: MaterialApp(
