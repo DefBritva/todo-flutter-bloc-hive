@@ -21,7 +21,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final index = event.index;
       final name = event.name;
       final text = event.text;
-      await _todoService.updateNote(index, name, text, false);
+      await _todoService.updateTask(index, name, text, false);
       final newState =
           TaskOpenedState(note: Note(name: name, text: text), index: index);
       emit(newState);

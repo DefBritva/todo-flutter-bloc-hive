@@ -28,7 +28,7 @@ class TodoService {
     await tasksBox.clear();
   }
 
-  Future<void> updateNote(
+  Future<void> updateTask(
       int index, String name, String text, bool isDone) async {
     await tasksBox.putAt(index, Note(name: name, text: text, done: isDone));
   }
