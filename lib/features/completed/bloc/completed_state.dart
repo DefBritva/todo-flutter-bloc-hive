@@ -5,12 +5,17 @@ sealed class CompletedState extends Equatable {
   const CompletedState({required this.completedTasks});
   @override
   List<Object?> get props => [completedTasks];
-}
-
-final class CompletedInitial extends CompletedState {
-  const CompletedInitial({required super.completedTasks});
+  CompletedState clone({List<Note>? completedTasks});
 }
 
 class CompletedPageState extends CompletedState {
   const CompletedPageState({required super.completedTasks});
+
+  @override
+  CompletedPageState clone({
+    List<Note>? completedTasks,
+  }) {
+    return CompletedPageState(
+        completedTasks: completedTasks ?? this.completedTasks);
+  }
 }

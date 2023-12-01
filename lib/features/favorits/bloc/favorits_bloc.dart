@@ -9,9 +9,8 @@ part 'favorits_state.dart';
 class FavoritesBloc extends Bloc<FavoritsEvent, FavoritesState> {
   final FavoritesTasksService _favoritesService;
   FavoritesBloc(this._favoritesService)
-      : super(FavoritesPageState(_favoritesService.getFavoritesTasks())) {
-    on<FavoritsEvent>((event, emit) {});
-
+      : super(FavoritesPageState(
+            favorits: _favoritesService.getFavoritesTasks())) {
     on<CompleteFavoriteTask>((event, emit) async {
       final task = _favoritesService.getFavoritesTasks()[event.taskIndex];
       final name = task.name;
@@ -21,7 +20,7 @@ class FavoritesBloc extends Bloc<FavoritsEvent, FavoritesState> {
       await _favoritesService.completeFavoriteTask(
           event.taskIndex, completedTask);
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          state.clone(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
     });
 
@@ -29,44 +28,34 @@ class FavoritesBloc extends Bloc<FavoritsEvent, FavoritesState> {
       final note = _favoritesService.getFavoritesTasks()[event.noteIndex];
       await _favoritesService.unfavoriteTask(note.name, event.noteIndex);
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          state.clone(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
     });
 
     on<DeleteFavoritePressed>((event, emit) async {
       await _favoritesService.deleteFavoriteTask(event.indexToDelete);
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          state.clone(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
-    });
-
-    on<DoneFavoriteTask>((event, emit) async {
-      var note = _favoritesService.getFavoritesTasks()[event.index];
-      var name = note.name;
-      var text = note.text;
-      var isDone = note.done;
-      await _favoritesService.completeFavoriteTask(
-          event.index, Note(name: name, text: text, done: !isDone));
-      emit(FavoritesPageState(_favoritesService.getFavoritesTasks()));
     });
 
     on<FavoritesOpen>((event, emit) {
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          FavoritesPageState(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
     });
 
     on<ArchiveFavoriteTask>((event, emit) async {
       await _favoritesService.archiveFavoriteTask(event.index);
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          state.clone(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
     });
 
     on<DeleteAllFavoritesTasks>((event, emit) async {
       await _favoritesService.deleteAllFavoritesTasks();
       final newState =
-          FavoritesPageState(_favoritesService.getFavoritesTasks());
+          state.clone(favorits: _favoritesService.getFavoritesTasks());
       emit(newState);
     });
   }

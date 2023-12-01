@@ -9,13 +9,8 @@ sealed class TaskState extends Equatable {
   });
   @override
   List<Object?> get props => [index, task];
-}
 
-final class TaskInitial extends TaskState {
-  const TaskInitial({
-    required super.index,
-    required super.task,
-  });
+  TaskState clone({int? index, Note? task});
 }
 
 class TaskOpenedState extends TaskState {
@@ -23,6 +18,11 @@ class TaskOpenedState extends TaskState {
     required super.index,
     required super.task,
   });
+
+  @override
+  TaskOpenedState clone({int? index, Note? task}) {
+    return TaskOpenedState(index: index ?? this.index, task: task ?? this.task);
+  }
 }
 
 class FavoriteTaskOpenedState extends TaskState {
@@ -30,6 +30,12 @@ class FavoriteTaskOpenedState extends TaskState {
     required super.index,
     required super.task,
   });
+
+  @override
+  FavoriteTaskOpenedState clone({int? index, Note? task}) {
+    return FavoriteTaskOpenedState(
+        index: index ?? this.index, task: task ?? this.task);
+  }
 }
 
 class ArchiveNoteOpenedState extends TaskState {
@@ -37,6 +43,12 @@ class ArchiveNoteOpenedState extends TaskState {
     required super.index,
     required super.task,
   });
+
+  @override
+  ArchiveNoteOpenedState clone({int? index, Note? task}) {
+    return ArchiveNoteOpenedState(
+        index: index ?? this.index, task: task ?? this.task);
+  }
 }
 
 class CompletedNoteOpenedState extends TaskState {
@@ -44,4 +56,10 @@ class CompletedNoteOpenedState extends TaskState {
     required super.index,
     required super.task,
   });
+
+  @override
+  CompletedNoteOpenedState clone({int? index, Note? task}) {
+    return CompletedNoteOpenedState(
+        index: index ?? this.index, task: task ?? this.task);
+  }
 }

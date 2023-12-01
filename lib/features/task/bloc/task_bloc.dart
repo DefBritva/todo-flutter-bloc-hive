@@ -11,9 +11,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TasksService _taskService;
   final FavoritesTasksService _favoritesTasksService;
   TaskBloc(this._taskService, this._favoritesTasksService)
-      : super(const TaskInitial(index: 0, task: Note(name: ''))) {
-    on<TaskEvent>((event, emit) {});
-
+      : super(const TaskOpenedState(index: 0, task: Note(name: ''))) {
     on<TaskOpen>((event, emit) {
       final newState = TaskOpenedState(index: event.index, task: event.task);
       emit(newState);
@@ -25,7 +23,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final text = event.task.text;
       await _taskService.updateTask(index, name, text, false);
       final newState =
-          TaskOpenedState(task: Note(name: name, text: text), index: index);
+          state.clone(task: Note(name: name, text: text), index: index);
       emit(newState);
     });
 
@@ -42,8 +40,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final text = event.task.text;
       await _favoritesTasksService.updateFavoriteTask(
           event.index, event.task.name, event.task.text, isDone);
-      final newState = FavoriteTaskOpenedState(
-          index: event.index, task: Note(name: name, text: text));
+      final newState =
+          state.clone(index: event.index, task: Note(name: name, text: text));
       emit(newState);
     });
     on<ArchiveTaskOpen>((event, emit) {

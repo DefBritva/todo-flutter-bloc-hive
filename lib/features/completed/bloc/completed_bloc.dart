@@ -9,21 +9,19 @@ part 'completed_state.dart';
 class CompletedBloc extends Bloc<CompletedEvent, CompletedState> {
   final CompletedTasksService _completedService;
   CompletedBloc(this._completedService)
-      : super(CompletedInitial(
+      : super(CompletedPageState(
             completedTasks: _completedService.getCompletedTasks())) {
-    on<CompletedEvent>((event, emit) {});
-
     on<UncompleteTask>((event, emit) async {
       await _completedService.uncompleteTask(event.noteName, event.noteIndex);
-      final newState = CompletedPageState(
-          completedTasks: _completedService.getCompletedTasks());
+      final newState =
+          state.clone(completedTasks: _completedService.getCompletedTasks());
       emit(newState);
     });
 
     on<DeleteCompletedTask>((event, emit) async {
       await _completedService.deleteCompletedTask(event.indexToDelete);
-      final newState = CompletedPageState(
-          completedTasks: _completedService.getCompletedTasks());
+      final newState =
+          state.clone(completedTasks: _completedService.getCompletedTasks());
       emit(newState);
     });
 
@@ -35,15 +33,15 @@ class CompletedBloc extends Bloc<CompletedEvent, CompletedState> {
 
     on<ArchiveCompletedTask>((event, emit) async {
       await _completedService.archiveCompletedTask(event.index);
-      final newState = CompletedPageState(
-          completedTasks: _completedService.getCompletedTasks());
+      final newState =
+          state.clone(completedTasks: _completedService.getCompletedTasks());
       emit(newState);
     });
 
     on<DeleteAllCompletedTasks>((event, emit) async {
       await _completedService.deleteAllCompletedTasks();
-      final newState = CompletedPageState(
-          completedTasks: _completedService.getCompletedTasks());
+      final newState =
+          state.clone(completedTasks: _completedService.getCompletedTasks());
       emit(newState);
     });
   }

@@ -5,12 +5,16 @@ sealed class ArchiveState extends Equatable {
   const ArchiveState({required this.archive});
   @override
   List<Object?> get props => [archive];
-}
-
-final class ArchiveInitial extends ArchiveState {
-  const ArchiveInitial({required super.archive});
+  ArchiveState clone({List<Note>? archive});
 }
 
 final class ArchivePageState extends ArchiveState {
   const ArchivePageState({required super.archive});
+
+  @override
+  ArchivePageState clone({
+    List<Note>? archive,
+  }) {
+    return ArchivePageState(archive: archive ?? this.archive);
+  }
 }

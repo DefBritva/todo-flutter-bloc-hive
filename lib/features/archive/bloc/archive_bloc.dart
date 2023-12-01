@@ -9,9 +9,7 @@ part 'archive_state.dart';
 class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
   final ArchiveTasksService _archiveService;
   ArchiveBloc(this._archiveService)
-      : super(ArchiveInitial(archive: _archiveService.getArchiveTasks())) {
-    on<ArchiveEvent>((event, emit) {});
-
+      : super(ArchivePageState(archive: _archiveService.getArchiveTasks())) {
     on<ArchiveOpen>((event, emit) {
       final newState =
           ArchivePageState(archive: _archiveService.getArchiveTasks());
@@ -23,27 +21,25 @@ class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
       if (note.done) {
         await _archiveService.unarchiveCompletedTask(event.index);
         final newState =
-            ArchivePageState(archive: _archiveService.getArchiveTasks());
+            state.clone(archive: _archiveService.getArchiveTasks());
         emit(newState);
       } else {
         await _archiveService.unarchiveTask(event.index);
         final newState =
-            ArchivePageState(archive: _archiveService.getArchiveTasks());
+            state.clone(archive: _archiveService.getArchiveTasks());
         emit(newState);
       }
     });
 
     on<DeleteArchiveTask>((event, emit) async {
       await _archiveService.deleteArchiveTask(event.index);
-      final newState =
-          ArchivePageState(archive: _archiveService.getArchiveTasks());
+      final newState = state.clone(archive: _archiveService.getArchiveTasks());
       emit(newState);
     });
 
     on<DeleteAllArchiveTasks>((event, emit) async {
       await _archiveService.deleteAllArchiveTasks();
-      final newState =
-          ArchivePageState(archive: _archiveService.getArchiveTasks());
+      final newState = state.clone(archive: _archiveService.getArchiveTasks());
       emit(newState);
     });
   }
