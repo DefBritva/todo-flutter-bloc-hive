@@ -34,10 +34,10 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
               } else if (state is FavoriteTaskOpenedState) {
                 context.read<FavoritesBloc>().add(FavoritesOpen());
                 AppNavigation.back(context);
-              } else if (state is ArchiveNoteOpenedState) {
+              } else if (state is ArchiveTaskOpenedState) {
                 context.read<ArchiveBloc>().add(ArchiveOpen());
                 AppNavigation.back(context);
-              } else if (state is CompletedNoteOpenedState) {
+              } else if (state is CompletedTaskOpenedState) {
                 context.read<CompletedBloc>().add(CompletedOpen());
                 AppNavigation.back(context);
               }

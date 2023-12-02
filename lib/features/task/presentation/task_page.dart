@@ -40,10 +40,10 @@ class _TaskPageState extends State<TaskPage> {
         } else if (state is FavoriteTaskOpenedState) {
           name = state.task.name;
           isEnabled = true;
-        } else if (state is ArchiveNoteOpenedState) {
+        } else if (state is ArchiveTaskOpenedState) {
           name = state.task.name;
           isEnabled = false;
-        } else if (state is CompletedNoteOpenedState) {
+        } else if (state is CompletedTaskOpenedState) {
           textfieldFocusNode.unfocus();
           isEnabled = false;
           name = state.task.name;

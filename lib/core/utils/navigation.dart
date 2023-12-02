@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Навигация по страницам приложения
 class AppNavigation {
   static void showNote(BuildContext context) {
     Navigator.of(context).pushNamed('/groups/note');

@@ -18,12 +18,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<UpdateTask>((event, emit) async {
-      final index = event.index;
-      final name = event.task.name;
-      final text = event.task.text;
-      await _taskService.updateTask(index, name, text, false);
-      final newState =
-          state.clone(task: Note(name: name, text: text), index: index);
+      final index = state.index;
+      final task = event.task;
+
+      await _taskService.updateTask(index, task);
+      final newState = state.clone(task: task);
       emit(newState);
     });
 
@@ -46,13 +45,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
     on<ArchiveTaskOpen>((event, emit) {
       final newState =
-          ArchiveNoteOpenedState(index: event.index, task: event.task);
+          ArchiveTaskOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
 
     on<CompletedTaskOpen>((event, emit) {
       final newState =
-          CompletedNoteOpenedState(index: event.index, task: event.task);
+          CompletedTaskOpenedState(index: event.index, task: event.task);
       emit(newState);
     });
   }

@@ -1,6 +1,7 @@
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/domain/services/box_service.dart';
 
+// Логика работы страницы ArchiveTasksPage
 class ArchiveTasksService {
   Future<void> deleteArchiveTask(int index) async {
     await archiveTasksBox.deleteAt(index);

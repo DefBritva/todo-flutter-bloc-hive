@@ -6,7 +6,6 @@ import 'package:my_todo_list/core/domain/services/completed_task_service.dart';
 import 'package:my_todo_list/core/domain/services/favorites_task_service.dart';
 import 'package:my_todo_list/core/domain/services/task_service.dart';
 import 'package:my_todo_list/core/domain/services/box_service.dart';
-import 'package:my_todo_list/core//bloc/my_bloc_observer.dart';
 import 'package:my_todo_list/features/archive/archive_page.dart';
 import 'package:my_todo_list/features/archive/bloc/archive_bloc.dart';
 import 'package:my_todo_list/features/completed/bloc/completed_bloc.dart';
@@ -27,6 +26,8 @@ void main() async {
   Hive.init(dir.path);
   await Hive.initFlutter('hive_db');
   Bloc.observer = MyBlocObserver();
+  // Инициализируем Hive и передаём в Bloc наш observer для отслеживания
+  // состояний и событий
   runApp(const MainApp());
 }
 
@@ -35,6 +36,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Виджет MultiRepositoryProvider внедряет наши Services в дерево виджетов
+    // для последующей передачи их в BLoC, так как BLoC использует в себе сервисы
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
@@ -65,6 +68,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Внедряем в дерево виджетов блоки, для последующего доступа к блокам из
+    // виджетов ниже по дереву виджетов
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -96,6 +101,7 @@ class App extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
+        // все страницы приложения
         routes: {
           '/groups': (context) => const StartPage(),
           '/groups/form': (context) => const FormPage(),
@@ -107,5 +113,32 @@ class App extends StatelessWidget {
         initialRoute: '/groups',
       ),
     );
+  }
+}
+
+//observer для отслеживания состояний и событий
+class MyBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    debugPrint('${bloc.runtimeType} $event');
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    debugPrint('$error');
+  }
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    debugPrint('$change');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    debugPrint('$transition');
   }
 }

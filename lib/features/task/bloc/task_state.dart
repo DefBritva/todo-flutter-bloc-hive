@@ -38,28 +38,28 @@ class FavoriteTaskOpenedState extends TaskState {
   }
 }
 
-class ArchiveNoteOpenedState extends TaskState {
-  const ArchiveNoteOpenedState({
+class ArchiveTaskOpenedState extends TaskState {
+  const ArchiveTaskOpenedState({
     required super.index,
     required super.task,
   });
 
   @override
-  ArchiveNoteOpenedState clone({int? index, Note? task}) {
-    return ArchiveNoteOpenedState(
+  ArchiveTaskOpenedState clone({int? index, Note? task}) {
+    return ArchiveTaskOpenedState(
         index: index ?? this.index, task: task ?? this.task);
   }
 }
 
-class CompletedNoteOpenedState extends TaskState {
-  const CompletedNoteOpenedState({
+class CompletedTaskOpenedState extends TaskState {
+  const CompletedTaskOpenedState({
     required super.index,
     required super.task,
   });
 
   @override
-  CompletedNoteOpenedState clone({int? index, Note? task}) {
-    return CompletedNoteOpenedState(
+  CompletedTaskOpenedState clone({int? index, Note? task}) {
+    return CompletedTaskOpenedState(
         index: index ?? this.index, task: task ?? this.task);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/domain/services/box_service.dart';
 
+// Логика работы страницы StartPage
 class TasksService {
   Future<void> addTask(String name) async {
     await tasksBox.add(Note(name: name));
@@ -18,9 +19,8 @@ class TasksService {
     await tasksBox.clear();
   }
 
-  Future<void> updateTask(
-      int index, String name, String text, bool isDone) async {
-    await tasksBox.putAt(index, Note(name: name, text: text, done: isDone));
+  Future<void> updateTask(int index, Note note) async {
+    await tasksBox.putAt(index, note);
   }
 
   Future<void> completeTask(

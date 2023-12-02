@@ -1,6 +1,7 @@
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/domain/services/box_service.dart';
 
+// Логика работы страницы FavoritesTasksPage
 class FavoritesTasksService {
   Future<void> completeFavoriteTask(int index, Note task) async {
     await favoritesTasksBox.deleteAt(index);

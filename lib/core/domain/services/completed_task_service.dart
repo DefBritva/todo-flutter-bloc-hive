@@ -1,6 +1,7 @@
 import 'package:my_todo_list/core/domain/entity/note.dart';
 import 'package:my_todo_list/core/domain/services/box_service.dart';
 
+// Логика работы страницы CompletedTasksPage
 class CompletedTasksService {
   Future<void> uncompleteTask(String name, int index) async {
     final text = completedTasksBox.getAt(index)?.text ?? '';

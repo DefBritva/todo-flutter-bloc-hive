@@ -3,6 +3,7 @@ import 'package:my_todo_list/core/domain/entity/note.dart';
 
 part 'boxes.dart';
 
+// класс, который инициализирует базу данных
 class BoxService {
   Future<void> init() async {
     Hive.registerAdapter(NoteAdapter());

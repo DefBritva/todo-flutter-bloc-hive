@@ -4,7 +4,12 @@ import 'package:hive/hive.dart';
 
 part 'note.g.dart';
 
+//Используем аннотацию @HiveType для возможности последующего сохранения
+// класса в базу данных Hive. Для этого используется сгенерированный класс
+// NoteAdapter в файле note.g.dart
 @HiveType(typeId: 1)
+
+// Сущность заметки.
 class Note extends Equatable {
   @HiveField(1)
   final String name;
@@ -20,10 +25,10 @@ class Note extends Equatable {
 
   const Note({
     required this.name,
-    this.text = '',
-    this.done = false,
-    this.isFavorite = false,
-  });
+    this.text = '', // при добавлении новой заметки, она сохраняется в раздел
+    this.done = false, // tasks, где она не является выполненной и не является
+    this.isFavorite = false, // избранной, текст задается заметке при переходе
+  }); // на неё.
 
   @override
   List<Object?> get props => [name, text, done];
