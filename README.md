@@ -1,5 +1,5 @@
 # my_todo_list
-
+## Анализ паттернов: [перейти](https://github.com/DefBritva/todo-flutter-bloc-hive/tree/main/patterns_uml)
 
 ## Установка мобильного приложения на телефон (Android):
 ### 1. Перейдите на Releases или в директорию install.
