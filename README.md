@@ -6,9 +6,13 @@
 ### 3. run flutter pub get
 ### 4. run flutter build apk --release
 ### 5. genereted file here -> Project\build\app\outputs\apk\release\app-release.apk
+&nbsp;
+&nbsp;
 
 ## Анализ паттернов: [перейти](https://github.com/DefBritva/todo-flutter-bloc-hive/tree/main/patterns_uml)
 
+&nbsp;
+&nbsp;
 ## Установка мобильного приложения на телефон (Android):
 ### 1. Перейдите на Releases или в директорию install.
 ### 2. Скачайте apk файл на компьютер.
