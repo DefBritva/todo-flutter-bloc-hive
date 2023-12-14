@@ -22,6 +22,11 @@
 ### 2. Перейдите на Releases или в директорию install.
 ### 3. Скачайте apk файл и установите приложение.
 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
 <p align="center" width="100%">
     <img width="33%" src="https://github.com/DefBritva/todo-flutter-bloc-hive/blob/main/images/1.jpg">
 </p>
