@@ -1,4 +1,12 @@
 # my_todo_list
+
+## Генерация apk файла:
+### 1. setup flutter -> [Windows](https://docs.flutter.dev/get-started/install/windows)  |   [Linux](https://docs.flutter.dev/get-started/install/linux)    |    [macOS](https://docs.flutter.dev/get-started/install/macos)    |     [ChromeOS](https://docs.flutter.dev/get-started/install/chromeos)
+### 2. download project from release
+### 3. run flutter pub get
+### 4. run flutter build apk --release
+### 5. genereted file here -> Project\build\app\outputs\apk\release\app-release.apk
+
 ## Анализ паттернов: [перейти](https://github.com/DefBritva/todo-flutter-bloc-hive/tree/main/patterns_uml)
 
 ## Установка мобильного приложения на телефон (Android):
